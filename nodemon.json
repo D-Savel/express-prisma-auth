@@ -1,0 +1,10 @@
+{
+  "watch": [
+    "./",
+    "src"
+  ],
+  "ext": "ts,json",
+  "execMap": {
+    "ts": "concurrently \"npm run build\" \"ts-node src/server.ts\""
+  }
+}
