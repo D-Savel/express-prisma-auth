@@ -4,6 +4,10 @@ const UserBodySchema = {
     payload: {
       type: 'object',
       properties: {
+        id: {
+          type: 'string',
+          example: '6127b1a7-edf4-491f-af40-ea5b9495d3d8'
+        },
         username: {
           type: 'string',
           example: 'Johnny',
