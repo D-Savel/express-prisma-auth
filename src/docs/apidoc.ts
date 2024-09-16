@@ -1,10 +1,10 @@
-import createUser from './users/createUser';
-import { UserBodySchema, UserSchema, UserResponseSchema, UsersResponseSchema, UserUpdateBodySchema, ErrorResponseSchema } from './users/usersSchemas';
-import { usersExample, usersQueryExample, Error400BodyExample, Error400IdExample, Error400BadBodyExample } from './users/examples';
-import { deleteUser } from './users/deleteUserById';
-import { getUsers } from './users/getUsers';
-import { getUserById } from './users/getUserById';
-import updateUser from './users/updateUserById';
+import createUser from './users/createUser.js';
+import { UserBodySchema, UserSchema, UserResponseSchema, UsersResponseSchema, UserUpdateBodySchema, ErrorResponseSchema } from './users/usersSchemas.js';
+import { usersExample, usersQueryExample, Error400BodyExample, Error400IdExample, Error400BadBodyExample } from './users/examples.js';
+import { deleteUser } from './users/deleteUserById.js';
+import { getUsers } from './users/getUsers.js';
+import { getUserById } from './users/getUserById.js';
+import updateUser from './users/updateUserById.js';
 
 
 const apiDocumentation = {

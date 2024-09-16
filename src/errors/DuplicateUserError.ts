@@ -1,5 +1,5 @@
 
-import { CustomError } from "../utils/errors/CustomError";
+import { CustomError } from "../utils/errors/CustomError.js";
 
 export class DuplicateUserError extends CustomError {
   statusCode = 400;

@@ -1,5 +1,5 @@
-import { users } from "../../datas/users";
-import User from "../../types/Users/User";
+import { users } from "../../datas/users.js";
+import User from "../../types/Users/User.js";
 import { Request } from "express";
 
 // add user to users without update data in "../../datas/users" to simulate create request

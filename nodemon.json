@@ -1,10 +1,10 @@
 {
   "watch": [
-    "./",
-    "src"
+    "src",
+    "./"
   ],
   "ext": "ts,json",
   "execMap": {
-    "ts": "concurrently \"npm run build\" \"ts-node src/server.ts\""
+    "ts": "concurrently \"npm run build\" \"tts-node ./src/serer.ts\""
   }
 }

@@ -1,4 +1,4 @@
-import { CustomError } from '../utils/errors/CustomError';
+import { CustomError } from '../utils/errors/CustomError.js';
 
 export class BodyRequestValidationError extends CustomError {
   statusCode = 400;

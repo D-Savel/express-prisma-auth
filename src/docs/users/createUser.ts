@@ -1,4 +1,4 @@
-import { error404Schema, error400BodySchema, error500Schema } from "../errors/errorsSchemas";
+import { error404Schema, error400BodySchema, error500Schema } from "../errors/errorsSchemas.js";
 
 const createUser = {
   tags: ['Users'],

@@ -1,9 +1,17 @@
 import { body } from "express-validator";
-import { users } from "../../datas/users";
-import { DuplicateUserError } from "../../errors/DuplicateUserError";
+import capitalizeFirstLetter from "../../utils/common/capitalizeFirstLetter.js";
+
 
 export const createUserValidator =
   [
+    body('payload.id')
+      .trim()
+      .escape()
+      .bail()
+      .optional({ nullable: true })
+      .isUUID(4)
+      .withMessage('id is not valid, must be a UUID(version4)')
+    ,
     body('payload.username')
       .escape()
       .exists()
@@ -12,8 +20,9 @@ export const createUserValidator =
       .bail()
       .isString()
       .withMessage('username is not valid, must be a string')
-      .customSanitizer((username: string) => {
-        return username.replace(/^\w/, (c: string) => c.toUpperCase());
+      .custom((username: string) => {
+        console.log('create Validation', capitalizeFirstLetter(username));
+        return capitalizeFirstLetter(username);
       }),
     body('payload.email')
       .trim()
@@ -35,6 +44,6 @@ export const createUserValidator =
       .withMessage('password is required')
       .bail()
       .isString()
-      .isLength({ min: 4, max: 20 })
-      .withMessage('password must be between 4 and 20 characters'),
+      .isLength({ min: 4, max: 40 })
+      .withMessage('password must be between 4 and 40 characters'),
   ];

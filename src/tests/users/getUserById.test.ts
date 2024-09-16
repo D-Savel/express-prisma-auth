@@ -1,15 +1,14 @@
 import request, { Response } from "supertest";
-import app from "../../server";
+import app from "../../server.js";
 import { expect } from 'chai';
 import _ from 'lodash';
 
-
 describe('**** Users CRUD TEST ****', function () {
-  const userObjectKeys = ['id', 'username', 'email', 'password'];
+  const userObjectKeys = ['id', 'username', 'email', 'password', 'createdAt', 'updatedAt'];
   let response: Response;
 
   describe("Get USER BY ID", function () {
-    const idValue = '45cc8cdc-e36e-4970-af37-fee9088e2fb0';
+    const idValue = 'fd8234f3-31e5-4b3e-9e48-99dddf8a55c6';
     before(async function () {
       return (
         response = await request(app)

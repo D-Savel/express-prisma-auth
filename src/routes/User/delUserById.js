@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = require("express");
+var validationMiddleware_js_1 = require("../../middlewares/validation/validationMiddleware.js");
+var delEntityById_js_1 = require("../../controllers/api/entity/delEntityById.js");
+var delUserByIdValidator_js_1 = require("../../validation/users/delUserByIdValidator.js");
+var entityNotMatches_js_1 = require("../../middlewares/entityNotMatches.js");
+var path_1 = require("path");
+var url_1 = require("url");
+var router = express_1.default.Router();
+var __filename = (0, url_1.fileURLToPath)(import.meta.url);
+var __dirname = path_1.default.dirname(__filename);
+var entity = path_1.default.basename(__dirname);
+router.delete('/api/users/:id', (0, validationMiddleware_js_1.default)(delUserByIdValidator_js_1.delUserByIdValidator), (0, entityNotMatches_js_1.default)(entity), delEntityById_js_1.default);
+exports.default = router;

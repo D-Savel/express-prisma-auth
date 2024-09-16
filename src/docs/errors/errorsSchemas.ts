@@ -111,7 +111,7 @@ export function error422Schema(pathKeyValue: string, dbEntity: string, pathValue
               },
               message: {
                 type: 'string',
-                example: 'Fetching data to database Error'
+                example: 'Error fetching data to database Error'
               },
               data: {
                 type: null,

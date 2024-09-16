@@ -1,4 +1,4 @@
-import { error404Schema, error400BodySchema, error422Schema, error500Schema } from "../errors/errorsSchemas";
+import { error404Schema, error400BodySchema, error422Schema, error500Schema } from "../errors/errorsSchemas.js";
 
 const parameters = {
   dbEntity: 'user', //searched entity in db

@@ -1,4 +1,4 @@
-import User from "../../types/Users/User";
+import User from "../../types/Users/User.js";
 
 async function fetchUser(_user: User): Promise<User> {
   return new Promise((resolve) => {

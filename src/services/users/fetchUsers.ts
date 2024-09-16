@@ -1,4 +1,4 @@
-import User from "../../types/Users/User";
+import User from "../../types/Users/User.js";
 
 //Simulate asynchrone fetching data
 

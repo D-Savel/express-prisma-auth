@@ -1,4 +1,4 @@
-import User from "../types/Users/User";
+import User from "../types/Users/User.js";
 
 export const users: User[] = [
   { id: '6127b1a7-edf4-491f-af40-ea5b9495d3d8', username: "John", email: "jDoe@me.fr", password: "123Pasword" },

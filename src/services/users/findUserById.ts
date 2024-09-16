@@ -1,5 +1,5 @@
-import { users } from "../../datas/users";
-import User from "../../types/Users/User";
+import { users } from "../../datas/users.js";
+import User from "../../types/Users/User.js";
 
 function findUserById(_id: string): User | undefined {
   const user = users.find((item) => {

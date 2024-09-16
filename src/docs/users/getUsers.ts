@@ -1,4 +1,4 @@
-import { error404Schema, error422Schema, error500Schema } from "../errors/errorsSchemas";
+import { error404Schema, error422Schema, error500Schema } from "../errors/errorsSchemas.js";
 
 const getUsers = {
   tags: ['Users'],

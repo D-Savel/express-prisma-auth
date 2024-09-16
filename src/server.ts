@@ -1,15 +1,20 @@
-import express, { Application, Express, NextFunction, Request, Response } from 'express';
+import express, { Express, NextFunction, Request, Response } from 'express';
 import cors from "cors";
 import helmet from "helmet";
 import * as dotenv from 'dotenv';
-import morganMiddleware from './middlewares/morgan/morganMiddleware';
-import { overAllLimiter } from './config/express-rate-limit/rateLimit';
-import errorHandler from './middlewares/error/errorHandler';
-import routes from './routes';
-import { NotFoundError } from './errors/NotFoundError';
+import morganMiddleware from './middlewares/morgan/morganMiddleware.js';
+import { overAllLimiter } from './config/express-rate-limit/rateLimit.js';
+import errorHandler from './middlewares/error/errorHandler.js';
+import routes from './routes/index.js';
+import { NotFoundError } from './errors/NotFoundError.js';
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-import { apiDocumentation } from './docs/apidoc';
+import { apiDocumentation } from './docs/apidoc.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 
 // ==========

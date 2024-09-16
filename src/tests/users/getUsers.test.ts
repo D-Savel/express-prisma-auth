@@ -1,8 +1,7 @@
 import request, { Response } from "supertest";
-import app from "../../server";
+import app from "../../server.js";
 import { expect } from 'chai';
 import _ from 'lodash';
-
 
 describe('**** Users CRUD TEST ****', function () {
   const userObjectKeys = ['id', 'username', 'email', 'password'];

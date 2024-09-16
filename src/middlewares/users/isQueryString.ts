@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import getUsers from "../../controllers/api/users/getUsers";
+import getUsers from "../../controllers/api/entity/getAllEntity.js";
 
 const isQueryString = (req: Request, res: Response, next: NextFunction) => {
   try {
