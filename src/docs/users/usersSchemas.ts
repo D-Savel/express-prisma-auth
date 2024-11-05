@@ -14,7 +14,7 @@ const UserBodySchema = {
         },
         email: {
           type: 'string',
-          example: 'johnny@email.com',
+          example: 'johnny@mail.me',
         },
         password: {
           type: 'string',

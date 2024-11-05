@@ -2,8 +2,8 @@ import { error404Schema, error422Schema, error500Schema } from "../errors/errors
 
 const getUsers = {
   tags: ['Users'],
-  summary: 'Get list of users (Get filtered users with optional query string parameters: username & email)',
-  description: 'Get list of users (Get filtered users with optional query string parameters: username &email)',
+  summary: 'Get list of users (Get specific users and specific fields in response with optional query string parameters)',
+  description: 'Get list of users without optional query string parameters \n\nGet several specific users with optional query string parameters => ex: username=...&email=... &id=...\n\nReceive only selected fields of an entity in response from a request with fields query string parameters  => ex: fields= id,username,email',
   operationId: 'getUsers or getUsersBy',
   security: [
     {
@@ -16,7 +16,7 @@ const getUsers = {
       in: "query",
       description: "User id (uuid)",
       type: "string",
-      example: '45cc8cdc-e36e-4970-af37-fee9088e2fb0'
+      example: '6127b1a7-edf4-491f-af40-ea5b9495d3d8'
     },
     {
       name: "username",
@@ -32,6 +32,13 @@ const getUsers = {
       type: "string",
       example: 'emmaDoe@me.fr'
     },
+    {
+      name: "fields",
+      in: "query",
+      description: "selected fields of an entity to receive in response",
+      type: "string",
+      example: 'id,email'
+    },
   ],
   responses: {
     '200': {
@@ -45,6 +52,9 @@ const getUsers = {
             },
             usersQueryExample: {
               $ref: '#/components/examples/usersQueryExample'
+            },
+            usersFieldsQueryExample: {
+              $ref: '#/components/examples/usersFieldsQueryExample'
             }
           }
         }

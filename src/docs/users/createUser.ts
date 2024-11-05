@@ -39,13 +39,15 @@ const createUser = {
               data: {
                 type: 'object',
                 example: {
-                  user:
-                  {
-                    id: 'New random uuid',
-                    username: 'Johnny',
-                    email: 'johnny@email.com',
-                    password: '!1234Johnny#'
-                  }
+                  users:
+                    [
+                      {
+                        id: 'New random uuid or id = uuid in payload',
+                        username: 'Johnny',
+                        email: 'johnny@mail.me',
+                        password: '!1234Johnny#'
+                      },
+                    ]
                 }
               },
               errors: {
@@ -58,7 +60,7 @@ const createUser = {
       },
     },
     '400': {
-      description: 'Bad Request : Bad body or path parameters for request',
+      description: 'Bad Request : Bad parameters (Body,path,query string) for request',
       content: {
         'application/json': {
           schema: { $ref: '#/components/schemas/ErrorResponseSchema' },
@@ -79,4 +81,4 @@ const createUser = {
 };
 
 
-export default createUser;
+export { createUser };

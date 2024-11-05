@@ -3,13 +3,13 @@ import User from "../../types/Users/User.js";
 import { Request } from "express";
 
 // add user to users without update data in "../../datas/users" to simulate create request
-function updateUser(_req: Request, _id: String, newUser: User): User {
+function updateUser(req: Request, _id: string, newUser: User): User {
   try {
     users.map((user) => {
       if (user.id === _id) {
-        _req.body.username ? user.username = _req.body.username : null;
-        _req.body.email ? user.email = _req.body.email : null;
-        _req.body.password ? user.password = _req.body.password : null;
+        req.body.username ? user.username = req.body.username : null;
+        req.body.email ? user.email = req.body.email : null;
+        req.body.password ? user.password = req.body.password : null;
       }
       return user;
     });

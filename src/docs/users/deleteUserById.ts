@@ -61,7 +61,7 @@ const deleteUser = {
           schema: { $ref: '#/components/schemas/ErrorResponseSchema' },
           example: {
             status: 'error',
-            message: 'Bad Request : Bad body or path parameters for request',
+            message: 'Bad Request : Bad path parameters for request',
             data: {
               errors:
                 [

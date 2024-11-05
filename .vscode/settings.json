@@ -2,6 +2,8 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnPaste": false,
   "editor.formatOnSave": false,
+  "editor.wordWrap": "wordWrapColumn",
+  "editor.wordWrapColumn": 100,
   "[json]": {
     "editor.formatOnSave": true
   },

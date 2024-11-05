@@ -4,7 +4,7 @@ import helmet from "helmet";
 import * as dotenv from 'dotenv';
 import morganMiddleware from './middlewares/morgan/morganMiddleware.js';
 import { overAllLimiter } from './config/express-rate-limit/rateLimit.js';
-import errorHandler from './middlewares/error/errorHandler.js';
+import errorHandler from './middlewares/error/errorHandlerMiddleware.js';
 import routes from './routes/index.js';
 import { NotFoundError } from './errors/NotFoundError.js';
 import swaggerJSDoc from "swagger-jsdoc";
@@ -99,8 +99,9 @@ app.use("/", routes);
 
 // Handles 404 errors
 app.use((req: Request, res: Response, next: NextFunction) => {
+
   try {
-    throw new NotFoundError("Route doesn't exist");
+    throw new NotFoundError(`Route doesn't exist: ${req.url} `);
   } catch (error) {
     return next(error);
   }

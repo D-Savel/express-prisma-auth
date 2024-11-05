@@ -2,22 +2,26 @@ import express from "express";
 
 // import single route from directory
 // ex: import ...Router from "./...Router";
-import usersRouter from "./User/getUsers.js";
-import createUserRouter from "./User/createUser.js";
-import UpdateUserRouter from "./User/updateUserById.js";
-import getUserByIdRouter from "./User/getUserById.js";
+
+
+/** express root Import */
 import expressRootRouter from "./root/expressRoot.js";
-import delUserByIdRouter from './User/delUserById.js';
 
+// /** User Import*/
+import usersCrudRouter from "./users/crudRoutes.js";
 
+/** Story Import*/
+import storiesCrudRouter from "./stories/crudRoutes.js";
 
 const router = express.Router();
 
+/*Express routes*/
 router.use('', expressRootRouter);
-router.use('', usersRouter);
-router.use('', createUserRouter);
-router.use('', UpdateUserRouter);
-router.use('', getUserByIdRouter);
-router.use('', delUserByIdRouter);
+
+/*User routes*/
+router.use('', usersCrudRouter);
+
+/*Story routes*/
+router.use('', storiesCrudRouter);
 
 export default router;

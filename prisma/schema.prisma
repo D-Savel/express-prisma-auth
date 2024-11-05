@@ -15,12 +15,23 @@ datasource db {
 }
 
 model User {
-  id    String     @id @unique
+  id    String   @unique   @id
   email String  @unique
-  username  String?
+  username  String @unique
   password String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  @@map(name: "user")
+  @@map(name:"user")
+  stories Story[]
+}
+
+model Story {
+  id    String   @unique   @id
+  name String  @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userOfStory   User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId String?
+  @@map(name: "story")
 }
 

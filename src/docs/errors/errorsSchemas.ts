@@ -10,7 +10,7 @@ export function error400BodySchema(emptyKey: string, syntaxErrorkey: string, syn
 
   return (
     {
-      description: `Bad Request: Bad body or path parameters for request.\nResponse example for these parameters => empty ${emptyKey}, and ${syntaxErrorkey} parameter syntax error with value: ${syntaxErrorValue}`,
+      description: `Bad Request: Bad parameters (Body,path,query string) for request.\nResponse example for these parameters => empty ${emptyKey}, and ${syntaxErrorkey} parameter syntax error with value: ${syntaxErrorValue}`,
       content: {
         'application/json': {
           schema: {
@@ -22,7 +22,7 @@ export function error400BodySchema(emptyKey: string, syntaxErrorkey: string, syn
               },
               message: {
                 type: 'string',
-                example: 'Bad Request: Bad body or path parameters for request'
+                example: 'Bad Request: Bad parameters (Body,path,query string) for request'
               },
               data: {
                 type: null,

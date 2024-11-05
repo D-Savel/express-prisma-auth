@@ -3,7 +3,7 @@ import { error404Schema, error400BodySchema, error422Schema, error500Schema } fr
 const parameters = {
   dbEntity: 'user', //searched entity in db
   keyName: 'id', // key for query string in path
-  keyValue: "45cc8cdc-e36e-4970-af37-fee9088e2fb0", // value for query string in path
+  keyValue: "6127b1a7-edf4-491f-af40-ea5b9495d3d8", // value for query string in path
 };
 
 const updateUser = {
@@ -98,4 +98,4 @@ const updateUser = {
 };
 
 
-export default updateUser;
+export { updateUser };

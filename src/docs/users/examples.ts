@@ -13,12 +13,14 @@ const usersExample = {
         },
         {
           id: '45cc8cdc-e36e-4970-af37-fee9088e2fb0',
-          username: "Jane", email: "jane.Doe@me.fr",
+          username: "Jane",
+          email: "jane.Doe@me.fr",
           password: "Password123"
         },
         {
           id: '196cab8b-0284-4d0a-85c6-d171051b8966',
-          username: "Emma", email: "EmmaDoe@me.fr",
+          username: "Emma",
+          email: "EmmaDoe@me.fr",
           password: "Password"
         },
       ],
@@ -30,7 +32,7 @@ const usersExample = {
 
 
 const usersQueryExample = {
-  summary: 'An example of users response WITH query string request (username=John&email=emmaDoe@me.fr)',
+  summary: 'An example of users response WITH query string request (username=John&email=emmaDoe@me.fr) => Return only existing users from all queries made for each field ',
   value: {
     status: 'success',
     message: 'Users for query username=John&email=emmaDoe@me.fr successfully retreived',
@@ -42,9 +44,34 @@ const usersQueryExample = {
         password: '123Pasword'
       },
       {
+        id: '45cc8cdc-e36e-4970-af37-fee9088e2fb0',
+        email: "jane.Doe@me.fr",
+      },
+      {
         id: '196cab8b-0284-4d0a-85c6-d171051b8966',
-        username: '\"Emma\", email: \"EmmaDoe@me.fr\"',
+        username: 'Emma',
+        email: 'EmmaDoe@me.fr',
         password: 'Password'
+      },
+      ],
+    },
+    "errors": null
+  }
+};
+
+const usersFieldsQueryExample = {
+  summary: 'An example of users response WITH only query string fields request (fields=id;email)',
+  value: {
+    status: 'success',
+    message: 'Users for query username=John&email=emmaDoe@me.fr successfully retreived',
+    data: {
+      users: [{
+        id: '6127b1a7-edf4-491f-af40-ea5b9495d3d8',
+        email: 'jDoe@me.fr',
+      },
+      {
+        id: '196cab8b-0284-4d0a-85c6-d171051b8966',
+        email: 'EmmaDoe@me.fr'
       },
       ],
     },
@@ -58,7 +85,7 @@ const Error400BodyExample = {
   summary: 'An example of response for body error with body value : username=\'\' and invalid email=\'emma@mail\'',
   value: {
     status: 'error',
-    message: 'Bad Request: Bad body or path parameters for request',
+    message: 'Bad Request: Bad parameters (Body,path,query string) for request',
     data: null,
     errors:
       [
@@ -87,7 +114,7 @@ const Error400IdExample = {
   summary: 'An example of response for path error with invalid uuid id value = 12345 ',
   value: {
     status: 'error',
-    message: 'Bad Request: Bad body or path parameters for request',
+    message: 'Bad Request: Bad parameters (Body,path,query string) for request',
     data: null,
     errors:
       [
@@ -118,4 +145,4 @@ const Error400BadBodyExample = {
 
 
 
-export { usersExample, usersQueryExample, Error400BodyExample, Error400IdExample, Error400BadBodyExample };
+export { usersExample, usersQueryExample, usersFieldsQueryExample, Error400BodyExample, Error400IdExample, Error400BadBodyExample };

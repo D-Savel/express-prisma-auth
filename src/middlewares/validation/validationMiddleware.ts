@@ -12,6 +12,7 @@ const validate = (validations: ValidationChain[]) => {
       );
       const errors = validationResult(req);
       if (errors.isEmpty()) {
+        console.log('*** VALIDATION PASSED ***');
         next();
       } else {
         throw new RequestValidationError(`request parameter error => ${req.url}`, errors);

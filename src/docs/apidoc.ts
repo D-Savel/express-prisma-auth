@@ -1,10 +1,11 @@
-import createUser from './users/createUser.js';
 import { UserBodySchema, UserSchema, UserResponseSchema, UsersResponseSchema, UserUpdateBodySchema, ErrorResponseSchema } from './users/usersSchemas.js';
-import { usersExample, usersQueryExample, Error400BodyExample, Error400IdExample, Error400BadBodyExample } from './users/examples.js';
+import { usersExample, usersQueryExample, usersFieldsQueryExample, Error400BodyExample, Error400IdExample, Error400BadBodyExample } from './users/examples.js';
+import { createUser } from './users/createUser.js';
 import { deleteUser } from './users/deleteUserById.js';
 import { getUsers } from './users/getUsers.js';
 import { getUserById } from './users/getUserById.js';
-import updateUser from './users/updateUserById.js';
+import { updateUser } from './users/updateUserById.js';
+
 
 
 const apiDocumentation = {
@@ -35,7 +36,7 @@ const apiDocumentation = {
     '/api/users/{id}': {
       get: getUserById,
       delete: deleteUser,
-      put: updateUser
+      patch: updateUser
     },
     '/api/users/': {
       get: getUsers,
@@ -61,6 +62,7 @@ const apiDocumentation = {
     examples: {
       usersExample,
       usersQueryExample,
+      usersFieldsQueryExample,
       Error400BodyExample,
       Error400IdExample,
       Error400BadBodyExample

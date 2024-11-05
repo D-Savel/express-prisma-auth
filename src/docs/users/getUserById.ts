@@ -3,7 +3,7 @@ import { error404Schema, error422Schema, error500Schema } from "../errors/errors
 const parameters = {
   dbEntity: 'user', //searched entity in db
   keyName: 'id', // key for query string in path
-  keyValue: "45cc8cdc-e36e-4970-af37-fee9088e2fb0",// value for query string in path
+  keyValue: "6127b1a7-edf4-491f-af40-ea5b9495d3d8",// value for query string in path
 };
 
 const getUserById = {
@@ -44,13 +44,15 @@ const getUserById = {
               data: {
                 type: 'object',
                 example: {
-                  user:
-                  {
-                    id: '45cc8cdc-e36e-4970-af37-fee9088e2fb0',
-                    username: "Jane",
-                    email: "jane.doe@me.fr",
-                    password: "Password123"
-                  }
+                  users:
+                    [
+                      {
+                        id: '45cc8cdc-e36e-4970-af37-fee9088e2fb0',
+                        username: "Jane",
+                        email: "jane.doe@me.fr",
+                        password: "Password123"
+                      },
+                    ]
                 },
               },
               errors: {
@@ -69,27 +71,27 @@ const getUserById = {
           schema: { $ref: '#/components/schemas/ErrorResponseSchema' },
           example: {
             status: 'error',
-            message: 'Bad Request : Bad body or path parameters for request',
-            data: {
-              errors:
-                [
-                  {
-                    type: 'field',
-                    value: '12345',
-                    msg: 'user id is not valid, must be a UUID version 4',
-                    path: 'id',
-                    location: 'params'
-                  },
-                ]
-            }
+            message: 'Bad Request : Bad path parameters for request',
+            data: null,
+            errors:
+              [
+                {
+                  type: 'field',
+                  value: '12345',
+                  msg: 'user id is not valid, must be a UUID version 4',
+                  path: 'id',
+                  location: 'params'
+                },
+              ],
           }
         }
       }
-    },
-    '404': error404Schema,
-    '422': error422Schema(parameters.keyName, parameters.dbEntity, parameters.keyValue.slice(1, -1)),
-    '500': error500Schema,
-  }
+    }
+  },
+  '404': error404Schema,
+  '422': error422Schema(parameters.keyName, parameters.dbEntity, parameters.keyValue.slice(1, -1)),
+  '500': error500Schema,
 };
+
 
 export { getUserById };
