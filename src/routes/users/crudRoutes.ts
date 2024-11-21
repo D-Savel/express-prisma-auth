@@ -35,7 +35,6 @@ router.delete(`/api/${primaryEntity}/:id`,
 
 router.get(`/api/${primaryEntity}/:id`,
   validate(getUserByValidator as ValidationChain[]),
-  noRecordForId(primaryEntity),
   crudForEntity);
 
 router.get(`/api/${primaryEntity}/`,

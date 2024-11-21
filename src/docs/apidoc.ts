@@ -1,5 +1,5 @@
 import { UserBodySchema, UserSchema, UserResponseSchema, UsersResponseSchema, UserUpdateBodySchema, ErrorResponseSchema } from './users/usersSchemas.js';
-import { usersExample, usersQueryExample, usersFieldsQueryExample, Error400BodyExample, Error400IdExample, Error400BadBodyExample } from './users/examples.js';
+import { usersExample, usersQueryExample, usersFieldsQueryExample, Error400BodyExample, Error400IdExample, Error400BadBodyExample, noMatchResponse } from './users/examples.js';
 import { createUser } from './users/createUser.js';
 import { deleteUser } from './users/deleteUserById.js';
 import { getUsers } from './users/getUsers.js';
@@ -65,7 +65,8 @@ const apiDocumentation = {
       usersFieldsQueryExample,
       Error400BodyExample,
       Error400IdExample,
-      Error400BadBodyExample
+      Error400BadBodyExample,
+      noMatchResponse
     }
   }
 };

@@ -22,7 +22,7 @@ const createUser = {
   },
   responses: {
     '201': {
-      description: "User created successfully => return user(new user) properties",
+      description: "User created successfully => return user(new user) secured properties",
       content: {
         'application/json': {
           schema: {
@@ -42,10 +42,8 @@ const createUser = {
                   users:
                     [
                       {
-                        id: 'New random uuid or id = uuid in payload',
                         username: 'Johnny',
-                        email: 'johnny@mail.me',
-                        password: '!1234Johnny#'
+                        email: 'johnny@mail.me'
                       },
                     ]
                 }

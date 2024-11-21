@@ -44,16 +44,24 @@ const usersQueryExample = {
         password: '123Pasword'
       },
       {
-        id: '45cc8cdc-e36e-4970-af37-fee9088e2fb0',
-        email: "jane.Doe@me.fr",
-      },
-      {
         id: '196cab8b-0284-4d0a-85c6-d171051b8966',
         username: 'Emma',
         email: 'EmmaDoe@me.fr',
         password: 'Password'
       },
       ],
+    },
+    "errors": null
+  }
+};
+
+const noMatchResponse = {
+  summary: 'An example of users response for no matched record(s) for request ',
+  value: {
+    status: 'success',
+    message: 'no matched record(s) for users',
+    data: {
+      users: []
     },
     "errors": null
   }
@@ -145,4 +153,4 @@ const Error400BadBodyExample = {
 
 
 
-export { usersExample, usersQueryExample, usersFieldsQueryExample, Error400BodyExample, Error400IdExample, Error400BadBodyExample };
+export { usersExample, usersQueryExample, usersFieldsQueryExample, Error400BodyExample, Error400IdExample, Error400BadBodyExample, noMatchResponse };

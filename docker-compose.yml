@@ -4,9 +4,9 @@ services:
     container_name: postgres_db
     restart: always
     environment:
-      POSTGRES_DB: my-story
+      POSTGRES_DB: my-db-project
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: savel
+      POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
     volumes:

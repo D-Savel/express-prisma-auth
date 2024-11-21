@@ -4,30 +4,37 @@ import { create, delById, getRecords, updateById } from "../../services/crud/dbR
 import entitiesFromRequest from "../../utils/common/entitiesFromRequest.js";
 import { User } from "@prisma/client";
 import queryPrismaArray from "../../utils/prisma/queryPrismaArray.js";
+import { Entity } from "../../types/Entity.js";
+
+import arrayIncludesElements from "../../utils/common/arrayIncludesElements.js";
 
 
 async function crudForEntity(req: Request, res: Response, next: NextFunction) {
   const entities = entitiesFromRequest(req); // DB entities object in lowercase
   console.log('primary entity: ', entities.singular!.primaryEntity);
-  let cleanedUserResponse: Partial<User> | null = null;// use for cleaned response without password,id,created for User
+  let cleanedUserResponse: Partial<User> | Object = {};// use for cleaned response without password,id,created for User
 
   if (req.method === 'POST') {
     try {
       let response = await create(req);
-      if (entities.singular!.primaryEntity === 'user' && response) {
-        const { id, password, createdAt, updatedAt, ...cleanedUserResponse } = response as User;
-      }
       console.log('Create Response', response);
       if (response) {
+        console.log('In CREATE USER *****');
+        const { id, password, createdAt, updatedAt, ...cleanedUserResponse } = response as Partial<User>;
         sendSuccess(res, 201, `${entities.singular!.primaryEntity} successfully created`, { [entities.plural!.primaryEntity]: entities.singular!.primaryEntity === 'user' ? [cleanedUserResponse] : [response] });
       }
+      // console.log('Create Response', response);
+      // if (response) {
+      //   sendSuccess(res, 201, `${entities.singular!.primaryEntity} successfully created`, { [entities.plural!.primaryEntity]: entities.singular!.primaryEntity === 'user' ? [cleanedUserResponse] : [response] });
+      // }
     } catch (error) {
       return next(error);
     }
   }
 
-  if (req.method === 'DEL') {
+  if (req.method === 'DELETE') {
     try {
+      console.log('in DEL Method ****');
       const deletedRecord = await delById(req);
       console.log('param in del', req.params.id);
       console.log('delete Record response', deletedRecord);
@@ -56,16 +63,28 @@ async function crudForEntity(req: Request, res: Response, next: NextFunction) {
       const records = await getRecords(req);
       console.log('In crudForEntity', records);
       console.log('Is ARRAY: ', Array.isArray(records));
-      if (records) {
-        const { fields, search, page, limit, sort, order, filter, ...queryKeys } = req.query;
-        let queryArray = queryPrismaArray(queryKeys, req.params);
-        // filter empty query param
-        queryArray = queryArray.filter(query => Object.keys(query).length !== 0);
-        if (records.length === Object.keys(queryArray).length) {
-          sendSuccess(res, 200, `Records for ${entities.plural!.primaryEntity} has been successfully retrieved (${records!.length} record(s)/${queryArray!.length} request(s))`, { [entities.plural!.primaryEntity]: records });
-        } else {
-          sendSuccess(res, 200, `Records for ${entities.plural!.primaryEntity} has been partialy retrieved (${records!.length} record(s)/${queryArray!.length} request(s))`, { [entities.plural!.primaryEntity]: records });
+      const { fields, search, page, limit, sort, order, filter, ...queryKeys } = req.query;
+      let queryArray = queryPrismaArray(queryKeys, req.params);
+      // filter empty query param
+      queryArray = queryArray.filter(query => Object.values(query).length !== 0);
+      const queryValuesArray = queryArray.map(item => Object.values(item).toString());
+      const recordsValuesArray = Array.from(records as unknown as []).map(item => (Object.values(item))).flat(Infinity);
+      if (records!.length > 0) {
+        console.log('query values', queryValuesArray);
+        console.log('records values', recordsValuesArray);
+
+        if (records!.length === queryArray.length) {
+          return sendSuccess(res, 200, `${records!.length} record(s) received / ${queryArray!.length} request(s) for ${entities.plural!.primaryEntity}`, { [entities.plural!.primaryEntity]: records });
         }
+        if (arrayIncludesElements(recordsValuesArray as string[], queryValuesArray) && records!.length === 1) {
+          return sendSuccess(res, 200, `${records!.length} unique record received / ${queryArray!.length} request(s) for ${entities.plural!.primaryEntity}`, { [entities.plural!.primaryEntity]: records });
+        }
+
+        if (records!.length < queryArray.length) {
+          return sendSuccess(res, 200, `Partial request match: ${records!.length} record(s) received / ${queryArray!.length} request(s) for ${entities.plural!.primaryEntity}`, { [entities.plural!.primaryEntity]: records });
+        }
+      } else {
+        return sendSuccess(res, 200, `no matched record(s) for ${entities.plural!.primaryEntity}`, { [entities.plural!.primaryEntity]: records });
       }
     } catch (error) {
       return next(error);

@@ -15,7 +15,7 @@ import { RequestValidationError } from "../../errors/RequestValidationError.js";
 const prisma = new PrismaClient();
 
 /* Create record with method POST*/
-const create = async (req: Request): Promise<any> => {
+const create = async (req: Request): Promise<Partial<Entity> | undefined> => {
   try {
     const entities = entitiesFromRequest(req); // DB entities object in lowercase
     if (entities.singular) {
@@ -40,12 +40,12 @@ const updateById = async (req: Request): Promise<Entity | null | undefined> => {
     let { payload } = req.body;
     payload = { ...payload, username: capitalizeFirstLetter(payload.username) };
     // @ts-ignore
-    const data = await prisma[entities.singular!.primaryEntity].update({
+    const createdData = await prisma[entities.singular!.primaryEntity].update({
       where: { id: req.params.id }
       ,
       data: payload
     });
-    return data;
+    return createdData;
   } catch (error) {
     console.log(error);
   }
@@ -79,7 +79,7 @@ const getRecords = async (req: Request): Promise<Entity | null | undefined> => {
   console.log('queryParams: ', req.query);
   console.log('Fields in getRecords', fields);
   console.log('queryKeys', queryKeys);
-  if (Object.keys(req.params).length !== 0 && Object.keys(req.query).length !== 0) throw new RequestValidationError('Bad parameters (path,query string) for request', `To make a request, you can't use together path param (id) and query string params with entity keys values (you can use options parameters as fields, page, limit, sort). ⇒ Use only path param (id) for unique record search by id.  ⇒ Use query string param for unique or multiple search (with one or several fields and one or several values)`);
+  if (Object.keys(req.params).length > 0 && Object.keys(req.query).length > 0 && Object.keys(req.query).includes(Object.keys(req.params).join(''))) throw new RequestValidationError('Bad parameters (path,query string) for request', `To make a request, you can't use together path param (id) and query string params (id) (you can use options parameters as fields, page, limit, sort). ⇒ Use only path param (id) for unique record search by id.  ⇒ Use query string param for unique or multiple search (with one or several fields and one or several values)`);
   if (entities.plural!.secondaryEntity !== null) {
     pathRequest = { [`${entities.singular!.secondaryEntity as string}Id`]: req.params.id };
   } else {

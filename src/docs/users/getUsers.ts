@@ -55,7 +55,10 @@ const getUsers = {
             },
             usersFieldsQueryExample: {
               $ref: '#/components/examples/usersFieldsQueryExample'
-            }
+            },
+            noMatchResponse: {
+              $ref: '#/components/examples/noMatchResponse'
+            },
           }
         }
       }

@@ -1,5 +1,8 @@
+import { Request } from "express";
 import { Prisma } from "@prisma/client";
 import { param, query } from "express-validator";
+import extractEntityFields from "../../utils/db/extractEntityFields";
+import entitiesFromRequest from "../../utils/common/entitiesFromRequest";
 
 export const byIdValidator = [
   param("id")
@@ -21,9 +24,10 @@ export const byIdValidator = [
     .bail()
     .isString()
     .withMessage('Please provide valid keys for query')
-    .custom((field) => {
+    .custom((field, { req }) => {
+      const entities = entitiesFromRequest(req as Request);
       // Compare user fields in prisma schema with  field value in query string for validating
-      const entityPrismaModel = Prisma.dmmf.datamodel.models.find(entity => entity.dbName === 'user');// get user model in prisma schema;
+      const entityPrismaModel = Prisma.dmmf.datamodel.models.find(entity => entity.dbName === entities.singular!.primaryEntity);// get user model in prisma schema;
       const fieldsArray: string[] = field.split(',');
       console.log('fields array', fieldsArray);
       for (const field of fieldsArray) {
