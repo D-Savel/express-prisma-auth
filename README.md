@@ -74,19 +74,22 @@ _Below is an example of how you can installing and setting up your express app.
   ~/yourProjectDirectory:npm install
  `
 
-### 4. Create .env at root of your project and choose the port you want to run the express-server on localhost an copy next config for postgres DB on docker
+### 4. Create .env at root of your project and choose the port you want to run the express-server on localhost (Default port for server: 9000) and copy next config for postgres DB on docker
 
   `~/yourProjectDirectory:touch .env`
 
   /.env 
   
-  (Default port for server: 9000)
   `PORT=yourServerPort(number)`
   `DATABASE_URL="postgresql://postgres:postgres@localhost:5432/my-db-project?schema=public"`
   `JWT_ACCESS_SECRET="your-jwt-access-token-secret"`
   `JWT_REFRESH_SECRET="your-refresh-token-secret"`  
 
-### 5. Define node version (you need to install node js 20 and nvm (optional) on your OS. For Windows https://github.com/coreybutler/nvm-windows/releases. For Linux ubuntu run in terminal curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh)
+### 5. Define node version
+    you need to install node js 20 and nvm (optional) on your OS.
+    For Windows https://github.com/coreybutler/nvm-windows/releases.
+    For Linux ubuntu run in terminal :
+    `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh`
   
   #### Run specific node version with nvm
 
