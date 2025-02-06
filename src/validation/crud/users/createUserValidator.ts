@@ -1,6 +1,5 @@
 import { body } from "express-validator";
-import capitalizeFirstLetter from "../../../utils/common/capitalizeFirstLetter";
-
+import capitalizeFirstLetter from "../../../utils/common/capitalizeFirstLetter.js";
 
 export const createUserValidator =
   [
@@ -20,9 +19,9 @@ export const createUserValidator =
       .bail()
       .isString()
       .withMessage('username is not valid, must be a string')
-      .custom((username: string) => {
-        console.log('create Validation', capitalizeFirstLetter(username));
-        return capitalizeFirstLetter(username);
+      .customSanitizer((username: string) => {
+        console.log('create Validation', username);
+        return username.toLowerCase();
       }),
     body('payload.email')
       .trim()
@@ -33,7 +32,7 @@ export const createUserValidator =
       .bail()
       .isEmail()
       .withMessage('Please provide valid email')
-      .customSanitizer((email) => {
+      .customSanitizer((email: string) => {
         return email.toLowerCase();
       }), ,
     body('payload.password')

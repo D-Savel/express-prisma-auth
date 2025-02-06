@@ -1,9 +1,5 @@
-import { PrismaClient } from '@prisma/client';
 import capitalizeFirstLetter from '../common/capitalizeFirstLetter.js';
-
-const prisma = new PrismaClient();
-
-
+import prisma from './prismaInstance.js';
 
 const john = async () => {
   const username = 'johnny';

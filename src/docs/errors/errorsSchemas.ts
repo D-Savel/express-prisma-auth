@@ -7,7 +7,6 @@ syntaxErrorValue : Value use in body request for syntax error
 */
 
 export function error400BodySchema(emptyKey: string, syntaxErrorkey: string, syntaxErrorValue: string): object {
-
   return (
     {
       description: `Bad Request: Bad parameters (Body,path,query string) for request.\nResponse example for these parameters => empty ${emptyKey}, and ${syntaxErrorkey} parameter syntax error with value: ${syntaxErrorValue}`,
@@ -84,6 +83,39 @@ export const error404Schema: object = {
   }
 };
 
+export function error409Schema(dbEntity: string): object {
+  return (
+    {
+      description: `Duplicate record(s) in db for ${dbEntity}`,
+      content: {
+        'application/json': {
+          schema: {
+            type: 'object',
+            properties: {
+              status: {
+                type: 'string',
+                example: 'error'
+              },
+              message: {
+                type: 'string',
+                example: `Duplicate record value(s) for ${dbEntity} field(s)`
+              },
+              data: {
+                type: null,
+                example: null
+              },
+              errors: {
+                type: 'string',
+                example: `${dbEntity} already exists in database with some unique field/record value`
+              }
+            }
+          }
+        }
+      }
+    }
+  );
+}
+
 /* For using with path
 // First parameter pathKeyValue : key use in query path (id for example)
 // Second parameter dbEntity: entity value for search in db(user entity searched in db for exapmle)
@@ -136,6 +168,7 @@ export function error422Schema(pathKeyValue: string, dbEntity: string, pathValue
     }
   );
 }
+
 
 export const error500Schema: object = {
   description: 'Server error',

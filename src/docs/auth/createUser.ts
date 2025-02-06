@@ -1,9 +1,17 @@
-import { error404Schema, error400BodySchema, error500Schema } from "../errors/errorsSchemas.js";
+import { error404Schema, error409Schema, error500Schema } from "../errors/errorsSchemas.js";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const entity = path.basename(__dirname).split(path.sep).pop();
+
+
 
 const createUser = {
-  tags: ['Users'],
+  tags: ['Auth'],
   summary: 'Create a new user',
-  description: 'Create a new user',
+  description: 'Create a new user (id is optional in payload => Use here for doc: id (uuid) is create in backend if not present in payload). username is saved in lowercase in DB',
   operationId: 'createUser',
   security: [
     {
@@ -14,11 +22,10 @@ const createUser = {
     content: {
       'application/json': {
         schema: {
-          $ref: '#/components/schemas/UserBodySchema',
+          $ref: '#/components/schemas/UserCreateBodySchema',
         },
       },
     },
-    required: true,
   },
   responses: {
     '201': {
@@ -42,8 +49,8 @@ const createUser = {
                   users:
                     [
                       {
+                        email: 'johnny@mail.me',
                         username: 'Johnny',
-                        email: 'johnny@mail.me'
                       },
                     ]
                 }
@@ -74,6 +81,7 @@ const createUser = {
       }
     },
     '404': error404Schema,
+    '409': error409Schema(entity as string),
     '500': error500Schema,
   }
 };

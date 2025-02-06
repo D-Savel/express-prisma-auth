@@ -18,20 +18,41 @@ model User {
   id    String   @unique   @id
   email String  @unique
   username  String @unique
+  role Role @default(FREE_USER)
   password String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   @@map(name:"user")
-  stories Story[]
+  stories Post[]
+  refreshToken RefreshToken[]
 }
 
-model Story {
+model RefreshToken {
+  id          String   @id @unique @default(uuid())
+  hashedToken String   @unique
+  userId      String
+  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  revoked     Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  expireAt    DateTime @default(dbgenerated("NOW() + interval '1 month'"))
+   @@map(name: "refreshToken")
+}
+
+model Post {
   id    String   @unique   @id
   name String  @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  userOfStory   User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+  User   User? @relation(fields: [userId], references: [id], onDelete: SetNull)
   userId String?
-  @@map(name: "story")
+  @@map(name: "post")
+}
+
+enum Role {
+ADMIN_ROLE
+FREE_USER
+BASIC_USER
+PREMIUM_USER
 }
 

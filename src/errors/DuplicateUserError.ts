@@ -1,12 +1,13 @@
 
+import capitalizeFirstLetter from "../utils/common/capitalizeFirstLetter.js";
 import { CustomError } from "../utils/errors/CustomError.js";
 
-export class DuplicateUserError extends CustomError {
-  statusCode = 400;
+export class DuplicateRecordError extends CustomError {
+  statusCode = 409;
   reason = 'Error fetching data to database';
-  constructor(ErrorDetail: string) {
-    super('Duplicate User', ErrorDetail);
-    Object.setPrototypeOf(this, DuplicateUserError.prototype);
+  constructor(ErrorDetail: string, entity: string) {
+    super(`Duplicate record values(s) for ${capitalizeFirstLetter(entity)} field(s)`, ErrorDetail);
+    Object.setPrototypeOf(this, DuplicateRecordError.prototype);
   }
   formatErrors() {
     return [{ message: this.reason }];

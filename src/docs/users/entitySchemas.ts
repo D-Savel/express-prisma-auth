@@ -1,4 +1,4 @@
-const UserBodySchema = {
+const UserCreateBodySchema = {
   type: 'object',
   properties: {
     payload: {
@@ -6,25 +6,31 @@ const UserBodySchema = {
       properties: {
         id: {
           type: 'string',
+          hidden: true,
           example: '6127b1a7-edf4-491f-af40-ea5b9495d3d8'
         },
         username: {
           type: 'string',
+          required: true,
           example: 'Johnny',
         },
         email: {
           type: 'string',
+          required: true,
           example: 'johnny@mail.me',
         },
         password: {
           type: 'string',
+          required: true,
           description: "unencrypted user's password",
           example: '!1234Johnny#',
-        }
+        },
       }
     }
   }
 };
+
+
 
 const UserUpdateBodySchema = {
   type: 'object',
@@ -50,6 +56,7 @@ const UserUpdateBodySchema = {
   }
 };
 
+
 const UserSchema = {
   type: 'object',
   properties: {
@@ -67,8 +74,8 @@ const UserSchema = {
     },
     password: {
       type: 'string',
-      description: "unencrypted user's password",
-      example: '!1234Johnny#',
+      description: "encrypted user's password",
+      example: 'iAcUla0vgQPmPIEIBUBClu3hojH7CdxRCm2ISwUkEXnJz34B6zTwq',
     }
   }
 };
@@ -103,8 +110,8 @@ const UserResponseSchema = {
             },
             password: {
               type: 'string',
-              description: "unencrypted user's password",
-              example: '!1234Johnny#',
+              description: "encrypted user's password",
+              example: 'iAcUla0vgQPmPIEIBUBClu3hojH7CdxRCm2ISwUkEXnJz34B6zTwq',
             }
           },
         }
@@ -166,6 +173,6 @@ const ErrorResponseSchema = {
 
 
 export {
-  UserBodySchema, UserResponseSchema, UserSchema,
+  UserCreateBodySchema, UserResponseSchema, UserSchema,
   UsersResponseSchema, UserUpdateBodySchema, ErrorResponseSchema
 };

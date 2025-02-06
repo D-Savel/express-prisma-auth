@@ -11,7 +11,8 @@ import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import { apiDocumentation } from './docs/apidoc.js';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from 'node:url';
+import cookieParser from 'cookie-parser';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -50,10 +51,11 @@ const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
 // Cors
 const corsOptions = {
+  origin: "localhost:9000",
+  credentials: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: true,
   optionsSuccessStatus: 404,
-  credentials: true,
   exposedHeaders: ["x-auth-token"],
 };
 
@@ -63,7 +65,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(overAllLimiter);
 app.use(helmet());
-
 app.use(
   // Helmet config
 
@@ -89,9 +90,9 @@ app.use(
   })
 );
 
-app.use(cors(corsOptions));
+//app.use(cors(corsOptions));
 app.use(morganMiddleware);
-
+app.use(cookieParser());
 // ==========
 // App routers
 // ==========

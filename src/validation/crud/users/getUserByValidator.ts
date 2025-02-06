@@ -2,26 +2,28 @@ import { Prisma } from "@prisma/client";
 import { query, param, checkExact } from "express-validator";
 import getsubdirectoryFromPath from "./getsubdirectoryFromPath.js";
 import pluralToSingular from "../../../utils/common/pluralToSingular.js";
+
 const entity = pluralToSingular(getsubdirectoryFromPath());
 
 export const getUserByValidator = [
-  param("id")
-    .trim()
-    .escape()
-    .optional()
-    .exists()
-    .notEmpty()
-    .withMessage('id is required in url path (example: /api/ENTITY/{id}')
-    .bail()
-    .isUUID(4)
-    .withMessage('id is not valid, must be a UUID version 4'),
   checkExact(
     [query("id")
       .trim()
       .escape()
       .optional()
       .notEmpty()
-      .withMessage('user id is required in query path'),
+      .withMessage('user id is required in query path')
+      .bail()
+      .withMessage('id is not valid, must be a UUID version 4')
+      .custom((idQuery) => {
+        console.log('ID QUERY', idQuery);
+        for (const id of (idQuery.split(","))) {
+          const uuidRegex = /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}(?:\/.*)?$/i;
+          if (uuidRegex.test(id)) return true;
+          else return false;
+        }
+      })
+      .withMessage('id or one of id is not valid, must be a UUID version 4'),
     query("username")
       .trim()
       .escape()
@@ -30,9 +32,19 @@ export const getUserByValidator = [
       .withMessage('username data is required')
       .isString()
       .withMessage('username is not valid, must be a string in query path')
-      .customSanitizer((userName) => {
-        return userName.replace(/^\w/, (c: string) => c.toUpperCase());
-      }),
+      .customSanitizer((usernameQuery) => {
+        let usernames: string = '';
+        for (let username of (usernameQuery.split(","))) {
+          username = username
+            .trim()
+            .replace(/^\w/, (c: string) => c.toUpperCase());
+          if (username.length > 0) {
+            usernames = `${usernames}${usernames !== '' ? ',' : ''}${username}`;
+          }
+        }
+        return usernames;
+      })
+      ,
     query('fields')
       .trim()
       .escape()
@@ -50,13 +62,13 @@ export const getUserByValidator = [
         for (const field of fieldsArray) {
           console.log('filtered field', userPrismaModel?.fields.filter(el => el.name === field));
           // verify if field in query string is include in user prisma schema fields;
-          if ((userPrismaModel?.fields.filter(el => el.name === field))!.length == 0) {
+          if ((userPrismaModel?.fields.filter(el => el.name === field))!.length === 0) {
             return false;
           }
         }
         return true;
       })
-      .withMessage('Please provide valid field(s) for query response'),
+      .withMessage(`Invalid field value(s) in query string: please provide valid field(s) for response`),
     query('email')
       .trim()
       .escape()
@@ -64,12 +76,18 @@ export const getUserByValidator = [
       .notEmpty()
       .withMessage('email data is required ')
       .bail()
-      .isEmail()
-      .withMessage('Please provide valid email'),
+      .custom((emailQuery) => {
+        for (const email of (emailQuery.split(","))) {
+          const emailRegex = /^[\w-\._+]+@([\w-]+\.)+[\w-]{2,3}$/;
+          if (emailRegex.test(email)) return true;
+          else return false;
+
+        }
+      }),
 
     ],
     {
       message: 'invalid field()s in query',
     },
   )
-];
+];;;

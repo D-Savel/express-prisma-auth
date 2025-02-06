@@ -6,7 +6,7 @@ import { Entity } from "../../types/Entity.js";
 function singularEntityFromRequest(req: Request): Entity | null {
   let match;
   let formatedMatch;
-  // For request to Entity by id uses method DEL, PATCH, GET (/api/users/{id})
+  // For request to Entity by id uses method DEL, PATCH, GET (/api/v1/users/{id})
   const countBackslash = (req.originalUrl.match(/\//g) || []).length;
   if (countBackslash > 2) {
     // Create a regular expression pattern using the string(word) "/api" and char "/"

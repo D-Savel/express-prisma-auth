@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client';
 import { Entity } from '../../types/Entity.js';
 import extractUniqueKeys from './extractUniqueKeys.js';
-
-const prisma = new PrismaClient();
+import prisma from './prismaInstance.js';
 
 
 // extract fields from entity in db
@@ -11,9 +9,10 @@ export default async function extractEntityFields(entity: Entity): Promise<strin
   try {
     // @ts-ignore
     const response = await prisma[entity].findFirst();
-    const userKeys = response ? Object.keys(response) : [];
+    console.log('RESPONSE IN extract: ', response);
+    const entityKeys = response ? Object.keys(response) : [];
     extractUniqueKeys();
-    return userKeys; // Outpu ex t: ['id', 'name', 'email', 'createdAt','updatedAt'] for user
+    return entityKeys; // Output ex: ['id', 'name', 'email', 'createdAt','updatedAt'] for user
   } catch (error) {
     console.log(error);
   }

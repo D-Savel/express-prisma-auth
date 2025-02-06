@@ -5,6 +5,8 @@ import { Entity } from "../../types/Entity";
 
 const dbEntities = extractEntitiesFromDb();
 
+console.log('DB ENTITIES in Count entity', dbEntities);
+
 
 function entitiesCountInUrl(req: Request): number {
   let count: number = 0;

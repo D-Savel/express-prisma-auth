@@ -14,7 +14,7 @@ export default function getUsersByIdTest(keys: string[]) {
       before(async function () {
         return (
           response = await request(app)
-            .get(`/api/users/${encodeURI(idValue)}`)
+            .get(`/api/v1/users/${encodeURI(idValue)}`)
         );
       });
       it('it should return status 200', async function () {

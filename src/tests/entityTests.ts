@@ -4,16 +4,11 @@ import getUsersTest from "./entity/getUsers.test.js";
 import getUsersByIdTest from "./entity/getUserById.test.js";
 import { Entity } from "../types/Entity.js";
 import createRecordTest from "./entity/createRecord.test.js";
-import { mean } from "lodash";
-import path from "path";
 
 const param = process.argv.slice(-1);
 const entityParam = param[0].replace('--', '');
 console.log('PARAM: ', entityParam);
 console.log('PARAM TAB: ', process.argv);
-
-const entities = ['user'];
-const entityTest = entities[0] as Entity;
 
 interface UserPayload {
   id: string;
@@ -32,6 +27,7 @@ const payload: UserPayload = {
 
 const keys = await extractEntityFields(entityParam as Entity);
 const createKeys = keys?.filter(key => key === 'username' || key === 'email');
+console.log('PARAM in TESTS', entityParam);
 console.log('KEYS in TESTS', keys);
 createRecordTest(createKeys!, entityParam, { ['payload']: payload });
 getUsersTest(keys!);

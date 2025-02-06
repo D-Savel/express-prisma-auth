@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { param, query } from "express-validator";
 
+
 export const getUserByIdValidator = [
   param("id")
     .trim()
@@ -34,5 +35,5 @@ export const getUserByIdValidator = [
       }
       return true;
     })
-    .withMessage('Please provide valid field(s) for query response'),
+    .withMessage(`Invalid field value(s) in query string: please provide valid field(s) for response`),
 ];

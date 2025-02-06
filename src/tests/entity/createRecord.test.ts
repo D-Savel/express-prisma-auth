@@ -2,7 +2,6 @@ import request, { Response } from "supertest";
 import app from "../../server.js";
 import { expect } from 'chai';
 import _ from 'lodash';
-import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
 import singularToPlural from "../../utils/common/singularToPlural.js";
 import { Entity } from "../../types/Entity.js";
 import { Prisma } from "@prisma/client";
@@ -27,12 +26,22 @@ export default function createRecordTest(keys: string[], entityParam: string, pa
       //   }
       // };
       before(async function () {
-        return (response = await request(app)
-          .post(`/api/${singularToPlural(entityParam)}`)
-          .send(payload)
-          .set('Content-Type', 'application/json')
-          .set('Accept', 'application/json')
-        );
+        console.log('KEYS: ', keys);
+        if (entityParam === 'user') {
+          return (response = await request(app)
+            .post(`/api/v1/auth/register/${singularToPlural(entityParam)}`)
+            .send(payload)
+            .set('Content-Type', 'application/json')
+            .set('Accept', 'application/json')
+          );
+        } else {
+          return (response = await request(app)
+            .post(`/api/v1/${singularToPlural(entityParam)}`)
+            .send(payload)
+            .set('Content-Type', 'application/json')
+            .set('Accept', 'application/json')
+          );
+        }
       });
       it('it should return status 201', async function () {
         expect(response.status).equal(201);
@@ -44,13 +53,13 @@ export default function createRecordTest(keys: string[], entityParam: string, pa
         expect(response!.body.errors).is.null;
       });
       it(`it should user to be an object in data.${singularToPlural(entityParam)} response result containing ${keys!.length} keys: ${[...keys]}`, async function () {
-        expect(response!.body.data[singularToPlural(entityParam)]).to.be.an('object');
-        expect(response.body.data[singularToPlural(entityParam)]).to.have.all.keys([...keys!]);
+        expect(response!.body.data[singularToPlural(entityParam)]).to.be.an('array');
+        expect(response.body.data[singularToPlural(entityParam)][0]).to.have.keys([...keys!]);
         if (keys.includes('id')) expect(response.body.data[singularToPlural(entityParam)].id).to.be.a.string;
         for (const key of keys) {
           let entityKey = key;
           console.log('payload', payload);
-          console.log('Email type', typeof payload.email);
+          console.log('Email type', typeof payload!.email);
           console.log(Prisma.ModelName.User);
           console.log('key', key);
           expect(response.body.data[singularToPlural(entityParam)][key]).equal(payload[entityKey]);

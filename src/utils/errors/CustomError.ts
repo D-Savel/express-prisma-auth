@@ -1,13 +1,13 @@
 export abstract class CustomError extends Error {
   abstract statusCode: number;
-  errorDetail: string
+  errorDetail: string;
   constructor(message: string, errorDetail: string) {
     super(message);
-    this.errorDetail = errorDetail
+    this.errorDetail = errorDetail;
     Object.setPrototypeOf(this, CustomError.prototype);
   }
   abstract formatErrors(): {
     message: string,
-    field?: string
+    field?: string;
   }[];
 }

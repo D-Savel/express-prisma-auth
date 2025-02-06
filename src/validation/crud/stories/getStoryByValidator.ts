@@ -23,10 +23,7 @@ export const getStoryByValidator = [
       .notEmpty()
       .withMessage('username data is required')
       .isString()
-      .withMessage('username is not valid, must be a string in query path')
-      .customSanitizer((userName) => {
-        return userName.replace(/^\w/, (c: string) => c.toUpperCase());
-      }),
+      .withMessage('username is not valid, must be a string in query path'),
     query('fields')
       .trim()
       .escape()
@@ -37,12 +34,10 @@ export const getStoryByValidator = [
       .isString()
       .withMessage('Please provide valid keys for query')
       .custom((field) => {
-        // Compare user fields in prisma schema with  field value in query string for validating
-        const storyPrismaModel = Prisma.dmmf.datamodel.models.find(model => model.dbName === entity);// get user model in prisma schema;
+        // Compare entuty fields in prisma schema with fields value in query string for validating
+        const storyPrismaModel = Prisma.dmmf.datamodel.models.find(model => model.dbName === entity);// get entity model in prisma schema;
         const fieldsArray: string[] = field.split(',');
-        console.log('fields array', fieldsArray);
         for (const field of fieldsArray) {
-          console.log('filtered field', storyPrismaModel?.fields.filter(el => el.name === field));
           // verify if field in query string is include in user prisma schema fields;
           if ((storyPrismaModel?.fields.filter(el => el.name === field))!.length == 0) {
             return false;

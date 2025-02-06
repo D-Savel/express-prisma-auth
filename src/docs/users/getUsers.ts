@@ -1,4 +1,4 @@
-import { error404Schema, error422Schema, error500Schema } from "../errors/errorsSchemas.js";
+import { error404Schema, error500Schema } from "../errors/errorsSchemas.js";
 
 const getUsers = {
   tags: ['Users'],
@@ -14,23 +14,23 @@ const getUsers = {
     {
       name: "id",
       in: "query",
-      description: "User id (uuid)",
+      description: "User id (uuid). Can be a single id (ex: 6127b1a7-edf4-491f-af40-ea5b9495d3d8) id or multi id (for admin only) ex: 6127b1a7-edf4-491f-af40-ea5b9495d3d8, 6127b1a7-edf4-491f-af40-ea5b9495d3d0, ...",
       type: "string",
       example: '6127b1a7-edf4-491f-af40-ea5b9495d3d8'
     },
     {
       name: "username",
       in: "query",
-      description: "The first name of the user (letter case ignored)",
+      description: "username uses for user (query string for admin only) : Can be a single username John or multi username ex: username John,Emma,...",
       type: "string",
-      example: 'john'
+      example: 'John'
     },
     {
       name: "email",
       in: "query",
-      description: "email of the user",
+      description: "email of the user (query string for admin only)",
       type: "string",
-      example: 'emmaDoe@me.fr'
+      example: 'emmaDoe@me.fr or emma@mail.me,johnny@mail.me,...  '
     },
     {
       name: "fields",
@@ -42,19 +42,19 @@ const getUsers = {
   ],
   responses: {
     '200': {
-      description: 'Users retrieved successfully!',
+      description: 'Users retrieved successfully or no matched record(s) for user',
       content: {
         'application/json': {
           schema: { $ref: '#/components/schemas/UsersResponseSchema' },
           examples: {
             usersExample: {
-              $ref: '#/components/examples/usersExample'
+              $ref: '#/components/examples/recordsResponseExample'
             },
             usersQueryExample: {
               $ref: '#/components/examples/usersQueryExample'
             },
             usersFieldsQueryExample: {
-              $ref: '#/components/examples/usersFieldsQueryExample'
+              $ref: '#/components/examples/recordsFieldsQueryExample'
             },
             noMatchResponse: {
               $ref: '#/components/examples/noMatchResponse'
@@ -64,7 +64,6 @@ const getUsers = {
       }
     },
     '404': error404Schema,
-    '422': error422Schema('query string', 'user'),
     '500': error500Schema,
   }
 };

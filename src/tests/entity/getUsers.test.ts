@@ -13,7 +13,7 @@ export default function getUsersTest(keys: string[]) {
       before(async function () {
         return (
           response = await request(app)
-            .get(`/api/users`)
+            .get(`/api/v1/users/`)
         );
       });
       it('it should return status 200', async function () {

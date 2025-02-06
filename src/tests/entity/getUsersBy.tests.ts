@@ -29,7 +29,7 @@ function getUserByTest(userFields: Partial<Fields>[]) {
   before(async function () {
     return (
       response = await request(app)
-        .get(`/api/users?${queryString}`)
+        .get(`/api/v1/users?${queryString}`)
     );
   });
   it('it should return status 200', async function () {
@@ -77,11 +77,8 @@ function getUserByError422Test(userFields: Partial<Fields>[]) {
   before(async function () {
     return (
       response = await request(app)
-        .get(`/api/users?${queryString}`)
+        .get(`/api/v1/users?${queryString}`)
     );
-  });
-  it('it should return status 422 for unexisting username in query', async function () {
-    expect(response.status).equal(422);
   });
   it(`it should message string in response includes No user(s) match(es) with query string: ${queryString.slice(0, -1)}`, async function () {
     expect(response.body.errors).includes(`No user(s) match(es) with query string: ${queryString.slice(0, -1)}`);

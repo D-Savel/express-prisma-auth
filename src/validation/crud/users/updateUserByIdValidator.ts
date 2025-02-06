@@ -8,11 +8,11 @@ export const updateUserValidator = [
     .escape()
     .exists()
     .notEmpty()
-    .withMessage('user id is required in url path = http://serverHost/api/users/user/{id}')
+    .withMessage('user id is required in url path = http://serverHost/api/v1/users/{id}')
     .bail()
     .isUUID(4)
     .withMessage('user id is not valid, must be a UUID version 4'),
-  body('username')
+  body('payload.username')
     .trim()
     .escape()
     .optional()
@@ -23,7 +23,7 @@ export const updateUserValidator = [
     .customSanitizer((userName) => {
       return userName.replace(/^\w/, (c: string) => c.toUpperCase());
     }),
-  body('email')
+  body('payload.email')
     .trim()
     .escape()
     .optional()
@@ -33,7 +33,7 @@ export const updateUserValidator = [
     .isEmail()
     .withMessage('Please provide valid email')
   ,
-  body('password')
+  body('payload.password')
     .trim()
     .escape()
     .optional()

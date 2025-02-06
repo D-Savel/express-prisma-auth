@@ -2,10 +2,10 @@ import { Request } from "express";
 import { Prisma } from "@prisma/client";
 import { param, query } from "express-validator";
 import extractEntityFields from "../../utils/db/extractEntityFields";
-import entitiesFromRequest from "../../utils/common/entitiesFromRequest";
+import entitiesFromRequest from "../../utils/common/entitiesFromRequest.js";
 
 export const byIdValidator = [
-  param("id")
+  param("payload.id")
     .trim()
     .escape()
     .optional()
@@ -15,7 +15,7 @@ export const byIdValidator = [
     .bail()
     .isUUID(4)
     .withMessage('id is not valid, must be a UUID version 4'),
-  query('fields')
+  query('payload.fields')
     .trim()
     .escape()
     .optional()

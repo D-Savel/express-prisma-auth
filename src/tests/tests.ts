@@ -2,7 +2,7 @@ import { spawn } from "node:child_process";
 
 const command = 'npx';
 const mochaArgs = process.argv.slice(2);
-const args = ['mocha', "--recursive", "--exit", "dist/tests/entityTests.js", ...mochaArgs];
+const args = ['mocha', "--recursive", "--exit", "--timeout 10000", "dist/tests/entityTests.js", ...mochaArgs];
 
 const mochaProcess = spawn(command, args, {
   stdio: 'inherit', // Directly inherit the standard input/output

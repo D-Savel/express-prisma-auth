@@ -1,4 +1,4 @@
-import { error404Schema, error422Schema, error500Schema } from "../errors/errorsSchemas.js";
+import { error404Schema, error500Schema } from "../errors/errorsSchemas.js";
 
 const parameters = {
   dbEntity: 'user', //searched entity in db
@@ -27,7 +27,7 @@ const getUserById = {
   ],
   responses: {
     '200': {
-      description: 'User retrieved successfully!',
+      description: 'User retrieved successfully or no matched record(s) for user',
       content: {
         'application/json': {
           schema: {
@@ -39,25 +39,21 @@ const getUserById = {
               },
               message: {
                 type: 'string',
-                example: `User with Id: ${parameters.keyValue} has been successfully retrieved`,
               },
               data: {
                 type: 'object',
-                example: {
-                  users:
-                    [
-                      {
-                        id: '45cc8cdc-e36e-4970-af37-fee9088e2fb0',
-                        username: "Jane",
-                        email: "jane.doe@me.fr",
-                      },
-                    ]
-                },
               },
               errors: {
                 type: null,
-                example: null
               }
+            },
+          },
+          examples: {
+            userExample: {
+              $ref: '#/components/examples/userExample'
+            },
+            userNoMatch: {
+              $ref: '#/components/examples/noMatchResponse'
             },
           },
         },
@@ -88,7 +84,6 @@ const getUserById = {
     }
   },
   '404': error404Schema,
-  '422': error422Schema(parameters.keyName, parameters.dbEntity, parameters.keyValue.slice(1, -1)),
   '500': error500Schema,
 };
 

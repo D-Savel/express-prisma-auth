@@ -1,4 +1,4 @@
-import { error404Schema, error400BodySchema, error422Schema, error500Schema } from "../errors/errorsSchemas.js";
+import { error404Schema, error400BodySchema, error500Schema } from "../errors/errorsSchemas.js";
 
 const parameters = {
   dbEntity: 'user', //searched entity in db
@@ -22,7 +22,7 @@ const updateUser = {
       "in": "path",
       "description": "User id",
       "type": "string",
-      "default": parameters.keyValue,
+      "default": `${encodeURI(parameters.keyValue)}`,
     }
   ],
   requestBody: {
@@ -56,7 +56,7 @@ const updateUser = {
                 example: {
                   user:
                   {
-                    id: '45cc8cdc-e36e-4970-af37-fee9088e2fb0',
+                    id: parameters.keyValue,
                     username: 'Sahra',
                     email: 'sahra@email.com',
                     password: '!1234Sahra'
@@ -91,7 +91,6 @@ const updateUser = {
         }
       }
     },
-    '422': error422Schema(parameters.keyName, parameters.dbEntity, parameters.keyValue.slice(1, -1)),
     '404': error404Schema,
     '500': error500Schema,
   }

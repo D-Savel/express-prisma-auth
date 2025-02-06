@@ -1,10 +1,20 @@
-const usersExample = {
-  summary: 'an example of users response WITHOUT query string request',
+
+import capitalizeFirstLetter from "../../utils/common/capitalizeFirstLetter.js";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import pluralToSingular from "../../utils/common/pluralToSingular.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const entity = path.basename(__dirname).split(path.sep).pop();
+
+const recordsResponseExample = {
+  summary: `an example of ${entity} response WITHOUT query string request`,
   value: {
     status: 'success',
-    message: 'Users successfully retreived',
+    message: `${capitalizeFirstLetter(entity as string)} successfully retreived`,
     data: {
-      "users": [
+      [entity as string]: [
         {
           id: '6127b1a7-edf4-491f-af40-ea5b9495d3d8',
           username: "John",
@@ -29,9 +39,26 @@ const usersExample = {
   }
 };
 
+const recordResponseExample = {
+  summary: `An example of ${pluralToSingular(entity as string)} response`,
+  value: {
+    status: 'success',
+    message: `1 record(s) received / 1 request(s) for ${entity as string}`,
+    data: {
+      [entity as string]: [
+        {
+          id: '6127b1a7-edf4-491f-af40-ea5b9495d3d8',
+          username: "John",
+          email: "jDoe@me.fr",
+          password: "123Pasword"
+        },
+      ],
+    },
+    "errors": null
+  }
+};
 
-
-const usersQueryExample = {
+const entityQueryExample = {
   summary: 'An example of users response WITH query string request (username=John&email=emmaDoe@me.fr) => Return only existing users from all queries made for each field ',
   value: {
     status: 'success',
@@ -56,24 +83,24 @@ const usersQueryExample = {
 };
 
 const noMatchResponse = {
-  summary: 'An example of users response for no matched record(s) for request ',
+  summary: `An example of ${pluralToSingular(entity as string)}(s) response for no matched record(s) for request`,
   value: {
     status: 'success',
-    message: 'no matched record(s) for users',
+    message: `no matched record(s) for ${pluralToSingular(entity as string)}(s) request`,
     data: {
-      users: []
+      [entity as string]: []
     },
     "errors": null
   }
 };
 
-const usersFieldsQueryExample = {
-  summary: 'An example of users response WITH only query string fields request (fields=id;email)',
+const recordsFieldsQueryExample = {
+  summary: `An example of ${entity} response WITH only query string fields request(fields = id;email)`,
   value: {
     status: 'success',
     message: 'Users for query username=John&email=emmaDoe@me.fr successfully retreived',
     data: {
-      users: [{
+      [entity as string]: [{
         id: '6127b1a7-edf4-491f-af40-ea5b9495d3d8',
         email: 'jDoe@me.fr',
       },
@@ -153,4 +180,4 @@ const Error400BadBodyExample = {
 
 
 
-export { usersExample, usersQueryExample, usersFieldsQueryExample, Error400BodyExample, Error400IdExample, Error400BadBodyExample, noMatchResponse };
+export { recordResponseExample, recordsResponseExample, entityQueryExample, recordsFieldsQueryExample, Error400BodyExample, Error400IdExample, Error400BadBodyExample, noMatchResponse };;;;

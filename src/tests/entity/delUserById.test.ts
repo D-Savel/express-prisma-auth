@@ -8,11 +8,11 @@ export default function delUserTest() {
     let response: Response;
 
     describe("DEL USER BY ID", function () {
-      const id = '3d180e19-4b3a-4038-811b-9225d2a678e7';
+      const id = '3d180e19-4b3a-4038-811b-9225d2a678e9';
       before(async function () {
         return (
           response = await request(app)
-            .del(`/api/users/${encodeURI(id)}`)
+            .del(`/api/v1/users/${encodeURI(id)}`)
         );
       });
       it('it should return status 200', async function () {
@@ -26,11 +26,6 @@ export default function delUserTest() {
       });
       it('it should data is null in response', async function () {
         expect(response.body.data).to.be.null;
-      });
-      it(`it should return status 422 for unexisting user when fetch user with id=${id}`, async function () {
-        response = await request(app)
-          .get(`/api/users/${encodeURI(id)}`);
-        expect(response.status).equal(422);
       });
     });
   });

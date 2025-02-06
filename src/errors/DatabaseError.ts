@@ -5,7 +5,7 @@ export class DatabaseError extends CustomError {
   statusCode = 422;
   reason = 'Error fetching data to database';
   constructor(ErrorDetail: string) {
-    super('Error fetching data to database', ErrorDetail);
+    super('Database Error', ErrorDetail);
     Object.setPrototypeOf(this, DatabaseError.prototype);
   }
   formatErrors() {

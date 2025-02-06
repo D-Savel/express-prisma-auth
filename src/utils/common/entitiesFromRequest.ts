@@ -4,7 +4,6 @@ import { Entities } from "../../types/Entities.js";
 import { Entity } from "../../types/Entity.js";
 import entitiesCountInUrl from "./entitiesCountInUrl.js";
 import pluralToSingular from "./pluralToSingular.js";
-import singularToPlural from "./singularToPlural.js";
 import extractEntitiesFromDb from "../db/extractEntitiesFromDb.js";
 
 let entities: Entities;
@@ -23,8 +22,11 @@ function entitiesFromRequest(req: Request): Entities {
     }
   }
 
+  console.log('URL ARRAY', urlToStringArray);
+  console.log('count ENTITIES', entitiesCountInUrl(req));
 
-  if (entitiesCountInUrl(req) === 2) {
+
+  if (entitiesCountInUrl(req) > 1) {
     entities = {
       plural:
       {
@@ -37,9 +39,7 @@ function entitiesFromRequest(req: Request): Entities {
         secondaryEntity: pluralToSingular(urlEntities[0]) as Entity
       }
     };
-  }
-
-  if (entitiesCountInUrl(req) === 1) {
+  } else {
     entities = {
       plural:
       {
@@ -52,7 +52,9 @@ function entitiesFromRequest(req: Request): Entities {
         secondaryEntity: null
       }
     };
-  } return entities;
+  }
+  console.log('Entities in Entities from REQ', entities);
+  return entities;
 }
 
 

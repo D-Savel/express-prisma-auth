@@ -1,17 +1,14 @@
-import { Prisma, PrismaClient } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 
-const prisma = new PrismaClient();
-
-
-/*  Extract id field and unique fields in entities
-*/
+// Return an array of objects with entity name as key and unique fields as value
+// e.g. [{user: ['email']}, {post: ['id', 'slug']}]
 export default function extractUniqueKeys() {
   const entities = Prisma.dmmf.datamodel.models;
-  let uniquesByEntities: any = [];
+  let uniquesByEntities: object[] = [];
   for (const entity of entities) {
     const uniqueFields = (entity.fields.filter(field => field.isUnique === true || field.isId == true)).map(field => field.name);
     uniquesByEntities.push({ [entity.name.toLowerCase()]: uniqueFields });
-    console.log('uniqueFields', uniquesByEntities);
   }
+  console.log('uniqueFields', uniquesByEntities);
   return uniquesByEntities;
 }
