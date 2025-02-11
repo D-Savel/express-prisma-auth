@@ -5,7 +5,7 @@ import { AuthError403 } from '../../errors/authError403';
 
 declare module 'express' {
   export interface Request {
-    user?: User;
+    user?: Partial<User>;
   }
 }
 

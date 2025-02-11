@@ -90,7 +90,7 @@ app.use(
   })
 );
 
-//app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 app.use(morganMiddleware);
 app.use(cookieParser());
 // ==========

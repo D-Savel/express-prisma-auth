@@ -13,7 +13,6 @@ import { fileURLToPath } from 'url';
 import { byIdValidator } from "../../validation/common/byIdValidator.js";
 import { getUserByIdValidator } from "../../validation/crud/users/getUserByIdValidator.js";
 import isAuth from "../../middlewares/auth/isAuth.js";
-import dataUserAuth from "../../middlewares/auth/authorize.js";
 import authorize from "../../middlewares/auth/authorize.js";
 
 

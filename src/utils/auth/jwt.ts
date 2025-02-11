@@ -5,9 +5,9 @@ import * as dotenv from 'dotenv';
 
 // Usually I keep the token between 5 minutes - 15 minutes
 function generateAccessToken(user: Partial<User>) {
-  return jwt.sign({ id: user.id }, process.env.JWT_ACCESS_SECRET as Secret, {
+  return jwt.sign({ id: user.id, role: user.role }, process.env.JWT_ACCESS_SECRET as Secret, {
     algorithm: 'HS256', // Explicitly specify algorithm
-    expiresIn: '1m',
+    expiresIn: '1m',// Short - lived tokens
     jwtid: crypto.randomBytes(16).toString('hex'), // Unique token ID
   });
 }

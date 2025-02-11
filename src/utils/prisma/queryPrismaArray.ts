@@ -37,11 +37,11 @@ function queryPrismaArray(queryKeys: object, pathRequest: object, req?: Request)
     }
   }
 
-  console.log('PATH REQUEST IN QUERYPRISMA ARRAY: ', pathRequest);
   if (pathRequest) {
     queryArray = [...queryArray, pathRequest!];
   }
   return queryArray;
+  console.log('PATH REQUEST IN QUERYPRISMA ARRAY: ', pathRequest);
 }
 
 export default queryPrismaArray;

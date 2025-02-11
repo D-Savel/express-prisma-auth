@@ -11,7 +11,7 @@ import expressRootRouter from "./root/expressRoot.js";
 import usersCrudRouter from "./users/crudRoutes.js";
 
 /** Story Import*/
-import storiesCrudRouter from "./stories/crudRoutes.js";
+import storiesCrudRouter from "./posts/crudRoutes.js";
 
 /** Auth Import*/
 import registerRouter from "./auth/local/register/register.js";

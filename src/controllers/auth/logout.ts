@@ -8,7 +8,7 @@ interface JwtPayload { userId: string; };
 
 declare module 'express' {
   export interface Request {
-    user?: User;
+    user?: Partial<User>;
   }
 }
 

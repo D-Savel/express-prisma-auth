@@ -16,6 +16,8 @@ const recordExists = (entity: Entity) => {
         return next();
       } else if (response!.length > 0 && req.method == 'POST' && req.originalUrl.includes('login')) {
         return next();
+      } else if (response!.length === 0 && req.method === 'PATCH' || req.method === 'PUT') {
+        return next();
       } else if (req.method == 'POST' && req.originalUrl.includes('register')) {
         throw new DuplicateRecordError(`${capitalizeFirstLetter(entity)} already exists in database with some unique field/record value`, entity);
       } else if (req.method == 'POST' && req.originalUrl.includes('login')) {
