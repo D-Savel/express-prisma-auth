@@ -23,10 +23,13 @@
 <!-- ABOUT THE PROJECT -->
 # About The Project
 
-## Express CRUD & Auth TypeScript Template
+## Express CRUD & Auth TypeScript Template. 
 
-This is an express TypeScript Template :
-+ Copy the boilerplate template, run docker postgres container and run an express server in few seconds to manage register/login for user (JWT with refreshtoken)
+This is an express TypeScript Template to manage register and login operation with securised access to API (auth using jwt with access and refresh tokens). API model is defined with prisma ORM model file (~/prisma/schema.prisma). CRUD operations are configured from model to implement on routes directory.
+
++ Clone the repo, run docker postgres container for fast db deployment and run an express server in few seconds to manage register/login for user (JWT with refreshtoken). After successful login, access token is provided in a cookie for few minutes duration, to continue to be connected :  
+  - You must use refresh token route on backend(http/localhost/api/v1/auth/local/refreshToken) before access token has expired in browser. Access token and refresh token are then updated.
+  - Or use refresh token route on backend(http/localhost/api/v1/auth/local/refreshToken) after received a 401 status error on client to update access token and refresh token. And retry request from client to backend server.
 + After installation navigate through the API doc:
   - localhost:PORT/docs => doc for API usage
 
@@ -46,14 +49,14 @@ This is an express TypeScript Template :
 
 ## Installation
 
-_Below is an example of how you can installing and setting up your express app.
+Below is an example of how you can install and set up your express app.
 
 ### 1. Clone the repo
 
 - In a terminal clone the repo
 
 `
-    git clone --depth=1 https://github.com/D-Savel/express-typescript-template.git yourProjectDirectory
+    git clone --depth=1 https://github.com/D-Savel/express-prisma-auth.git yourProjectDirectory
 `
 - Remove the .git directory in your project directory
 
@@ -62,60 +65,62 @@ _Below is an example of how you can installing and setting up your express app.
     rm -rf !$/.git
 `
 
-### 2. Open in editor (ex: vs code => type code .)
+### 2. Open in IDE (ex: vs code => type code .)
+- Open terminal and run
 
 `
   ~/yourProjectDirectory: code .
 `
 
 ### 3. Install NPM packages
+- Open terminal in your IDE and run
 
 `
-  ~/yourProjectDirectory:npm install
+  ~/yourProjectDirectory  npm install
  `
 
-### 4. Create .env at root of your project and choose the port you want to run the express-server on localhost (Default port for server: 9000) and copy next config for postgres DB on docker
+### 4. Create .env at root of your project and choose the port you want to run for the express-server on localhost (Default port for server: 9000) then copy next config for postgres DB on docker and secret for generate jwt.
 
-  `~/yourProjectDirectory:touch .env`
+  `~/yourProjectDirectory  touch .env`
 
   /.env 
   
-  `PORT=yourServerPort(number)
-  DATABASE_URL="postgresql://postgres:postgres@localhost:5432/my-db-project?schema=public"
-  JWT_ACCESS_SECRET="your-jwt-access-token-secret"
-  JWT_REFRESH_SECRET="your-refresh-token-secret"`  
+    `PORT=yourServerPort(number)`
+    `DATABASE_URL="postgresql://postgres:postgres@localhost:5432/my-db-project?schema=public"`
+    `JWT_ACCESS_SECRET="your-jwt-access-token-secret"`
+    `JWT_REFRESH_SECRET="your-jwt-refresh-token-secret"`
 
 ### 5. Define node version
 
-  you need to install node js 20 and nvm (optional) on your OS.
-  For Windows https://github.com/coreybutler/nvm-windows/releases.
-  For Linux ubuntu run in terminal :
-`
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh
-`
+  You need to install node js 20  
+
+     and nvm (optional) on your OS.  
+    - For Windows https://github.com/coreybutler/nvm-windows/releases.
+    - For Linux ubuntu run on terminal :  
+    `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh`
   
   #### Run specific node version with nvm
 
-  ~/yourProjectDirectory:nvm install 20  
-  ~/yourProjectDirectory:nvm use 20
+  ~/yourProjectDirectory `nvm install 20`   
+  ~/yourProjectDirectory `nvm use 20`
 `
 
   #### OR
 
-  Automatic update on bash terminal opening for linux ubuntu (use bash terminal in vs code with WSL in windows)
-  edit .bashrc in your ubuntu (wsl config)
+  Automatic node version update on bash terminal opening witn nvm installed for linux ubuntu (use bash terminal in vs code with WSL in windows)
+  edit .bashrc in your ubuntu config (wsl config)
 
 +  using vi
 
-    `~cd home/{user_name}`
+    `~ cd home/{user_name}`
 
-    `~/vi .bashrc` 
+    `~/  vi .bashrc` 
 
 +  Using vim
 
-      `~cd home/{user_name}`
+      `~ cd home/{user_name}`
 
-      `~/vim .bashrc `
+      `~/  vim .bashrc `
 
   Add this code at the end of file
   
@@ -131,26 +136,30 @@ if ! [[ "${PROMPT_COMMAND:-}" =~ _nvmrc_hook ]]; then
   PROMPT_COMMAND="_nvmrc_hook${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
 fi
 `
-### 7. run docker postgres DB container (you need to install docker on your OS)
-`
- ~/yourProjectDirectory: docker compose up
-`
-  - In terminal push model on DB with prisma ORM (Define model in ~/yourProjectDirectory/prisma/schema.prisma)
-`
- ~/yourProjectDirectory: npx prisma db push
-`
-  - To visualize DB, you can use prisma ORM utility (studio) running on port 5555
-`
- ~/yourProjectDirectory: npx prisma studio
-`
+### 7. Run docker postgres DB container (you need to install docker on your OS)
+- On your terminal run  
+
+ ~/yourProjectDirectory  `docker compose up -d`
+
+  - On terminal, push model on DB with prisma ORM (Model is defined in ~/yourProjectDirectory/prisma/schema.prisma)  
+
+ ~/yourProjectDirectory   `npx prisma db push`
+
+  - To visualize DB, you can use prisma ORM utility (studio) running on localhost:5555  
+
+ ~/yourProjectDirectory   `npx prisma studio`
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### 8. Start server
 
-`
- ~/yourProjectDirectory:npm run dev
-`
+ ~/yourProjectDirectory   `npm run dev`
+
+ ### 9. Start to use API with doc
+
+ In your browser go to  `localhost:SERVER_PORT/docs`
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

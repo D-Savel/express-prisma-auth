@@ -18,7 +18,7 @@ async function isAuth(req: Request, res: Response, next: NextFunction) {
   try {
     const { accessToken, refreshToken } = req.cookies;
     if (!accessToken || !refreshToken) {
-      throw new AuthError401('Unauthorized: No tokens provided');
+      throw new AuthError401('Unauthorized: Invalid or expired token');
     }
     const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET!) as JwtPayload;
     console.log('JWT : ', decoded);

@@ -30,7 +30,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
     await addRefreshTokenToWhitelist({ refreshToken, userId: user!.id });
     res
       .cookie('accessToken', accessToken, {
-        maxAge: 2 * 60 * 1000,
+        maxAge: 24 * 60 * 1000,
         sameSite: 'none',
         secure: true
       })
