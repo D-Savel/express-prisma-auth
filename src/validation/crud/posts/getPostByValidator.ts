@@ -5,7 +5,7 @@ import pluralToSingular from "../../../utils/common/pluralToSingular.js";
 
 const entity = pluralToSingular(getsubdirectoryFromPath());
 
-export const getStoryByValidator = [
+export const getPostByValidator = [
   checkExact(
     [query("id")
       .trim()
@@ -35,11 +35,11 @@ export const getStoryByValidator = [
       .withMessage('Please provide valid keys for query')
       .custom((field) => {
         // Compare entuty fields in prisma schema with fields value in query string for validating
-        const storyPrismaModel = Prisma.dmmf.datamodel.models.find(model => model.dbName === entity);// get entity model in prisma schema;
+        const postPrismaModel = Prisma.dmmf.datamodel.models.find(model => model.dbName === entity);// get entity model in prisma schema;
         const fieldsArray: string[] = field.split(',');
         for (const field of fieldsArray) {
           // verify if field in query string is include in user prisma schema fields;
-          if ((storyPrismaModel?.fields.filter(el => el.name === field))!.length == 0) {
+          if ((postPrismaModel?.fields.filter(el => el.name === field))!.length == 0) {
             return false;
           }
         }

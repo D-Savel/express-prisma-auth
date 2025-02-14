@@ -10,8 +10,8 @@ import expressRootRouter from "./root/expressRoot.js";
 // /** User Import*/
 import usersCrudRouter from "./users/crudRoutes.js";
 
-/** Story Import*/
-import storiesCrudRouter from "./posts/crudRoutes.js";
+/** Post Import*/
+import postsCrudRouter from "./posts/crudRoutes.js";
 
 /** Auth Import*/
 import registerRouter from "./auth/local/register/register.js";
@@ -27,8 +27,8 @@ router.use('', expressRootRouter);
 /*User routes*/
 router.use('/api/v1', usersCrudRouter);
 
-/*Story routes*/
-router.use('/api/v1', storiesCrudRouter);
+/*Post routes*/
+router.use('/api/v1', postsCrudRouter);
 
 /*Auth routes*/
 router.use('/api/v1', registerRouter);

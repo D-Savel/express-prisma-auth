@@ -12,7 +12,7 @@ import { fileURLToPath } from 'url';
 import crudForEntity from "../../controllers/api/crudForEntity.js";
 import noRecordForId from "../../middlewares/noRecordForId.js";
 import isAuth from "../../middlewares/auth/isAuth.js";
-import { getStoryByValidator } from "../../validation/crud/stories/getStoryByValidator.js";
+import { getPostByValidator } from "../../validation/crud/posts/getPostByValidator.js";
 import authorize from "../../middlewares/auth/authorize.js";
 
 
@@ -57,7 +57,7 @@ router.get(`/${primaryEntity}/:id`,
 
 router.get(`/${primaryEntity}/`,
   isAuth,
-  validate(getStoryByValidator as ValidationChain[]),
+  validate(getPostByValidator as ValidationChain[]),
   crudForEntity);
 
 router.patch(`/${primaryEntity}/:id`,

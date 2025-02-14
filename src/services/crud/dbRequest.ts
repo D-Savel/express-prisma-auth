@@ -81,7 +81,7 @@ const getRecords = async (req: Request, checkExists?: CheckExists): Promise<Enti
   console.log('QueryKeys in query string parameters: ', queryKeys);
   //For request with path param and query string param
   if (Object.keys(req.params).length > 0 && Object.keys(req.query).length > 0 && Object.keys(req.query).includes(Object.keys(req.params).join(''))) throw new RequestValidationError('Bad parameters (path,query string) for request', `To make a request, you can't use together path param (id) and query string params (id) (you can use options parameters as fields, page, limit, sort). ⇒ Use only path param (id) for unique record search by id.  ⇒ Use query string param for unique or multiple search (with one or several fields and one or several values)`);
-  //For request with foreign key (ex: user/15644-56454bggf-64b69gdfbrt/stories => foreign key of story = user)
+  //For request with foreign key (ex: user/15644-56454bggf-64b69gdfbrt/stories => foreign key of post = user)
   if (entities.plural!.secondaryEntity !== null) {
     pathRequest = { [`${entities.singular!.secondaryEntity as string}Id`]: req.params.id };
   } else {
