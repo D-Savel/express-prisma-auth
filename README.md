@@ -100,10 +100,11 @@ Below is an example of how you can install and set up your express app.
 
   You need to install node js 20  
 
-    and nvm (optional) on your OS.  
-    - For Windows `https://github.com/coreybutler/nvm-windows/releases`
-    - For Linux ubuntu run on terminal :  
-    `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh`
+  and nvm (optional) on your OS.  
+  - For Windows :
+  `https://github.com/coreybutler/nvm-windows/releases`
+  - For Linux ubuntu run on terminal :  
+  `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh`
   
   #### Run specific node version with nvm
 
