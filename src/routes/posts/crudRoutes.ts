@@ -13,7 +13,7 @@ import crudForEntity from "../../controllers/api/crudForEntity.js";
 import noRecordForId from "../../middlewares/noRecordForId.js";
 import isAuth from "../../middlewares/auth/isAuth.js";
 import { getPostByValidator } from "../../validation/crud/posts/getPostByValidator.js";
-import authorize from "../../middlewares/auth/authorize.js";
+import authorizeRole from "../../middlewares/auth/authorizeRole.js";
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -32,7 +32,7 @@ router.get(`/${secondaryEntity}/:id/${primaryEntity}`,
   /*TODO : Create specific validator 'getENTITYValidator.ts' to import for action get records (With or without query string request) for an primaryEntity*/
   // validate(getENTITYValidator as ValidationChain[]),
   isAuth,
-  authorize,
+  authorizeRole(["FREE_USER", "ADMIN_ROLE"]),
   crudForEntity);
 
 

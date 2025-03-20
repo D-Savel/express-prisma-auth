@@ -24,7 +24,7 @@ async function isAuth(req: Request, res: Response, next: NextFunction) {
     }
     const decoded = jwt.verify(accessToken, process.env.JWT_ACCESS_SECRET!) as JwtPayload;
     console.log('JWT : ', decoded);
-    req.user = { id: decoded.id, role: decoded.role };
+    res.locals.user = { id: decoded.id, role: decoded.role };
     next();
   } catch (error: any) {
     return next(error);

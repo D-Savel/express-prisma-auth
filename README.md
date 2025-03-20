@@ -89,6 +89,8 @@ Below is an example of how you can install and set up your express app.
     `DATABASE_URL="postgresql://postgres:postgres@localhost:5432/my-db-project?schema=public"`
     `JWT_ACCESS_SECRET="your-jwt-access-token-secret"`
     `JWT_REFRESH_SECRET="your-jwt-refresh-token-secret"`
+    `REFRESH_TOKEN_TIME="1 month"`
+    `ACCESS_TOKEN_TIME=24 * 60 * 1000`
 
 ### 5. Define node version
 

@@ -9,7 +9,7 @@ function queryPrismaArray(queryKeys: object, pathRequest: object, req?: Request)
       if ((value as string).includes(',')) {
         const valueArray = (value as string).split(',');
         for (const subValue of valueArray) {
-          queryArray = [...queryArray, { [`${key}`]: subValue }];
+          queryArray = [...queryArray, { [`${key}`]: subValue.trim() }];
         }
       } else {
         queryArray = [...queryArray, { [`${key}`]: value }];

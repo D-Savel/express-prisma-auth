@@ -3,7 +3,6 @@
 
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output = "../node_modules/.prisma/client"
@@ -35,7 +34,7 @@ model RefreshToken {
   revoked     Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  expireAt    DateTime @default(dbgenerated("NOW() + interval '1 month'"))
+  expireAt    DateTime @default(dbgenerated("NOW() + interval env(REFRESH_TOKEN_TIME)"))
    @@map(name: "refreshToken")
 }
 

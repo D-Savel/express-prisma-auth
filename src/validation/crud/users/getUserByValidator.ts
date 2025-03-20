@@ -37,7 +37,7 @@ export const getUserByValidator = [
         for (let username of (usernameQuery.split(","))) {
           username = username
             .trim()
-            .replace(/^\w/, (c: string) => c.toUpperCase());
+            .toLowerCase();
           if (username.length > 0) {
             usernames = `${usernames}${usernames !== '' ? ',' : ''}${username}`;
           }

@@ -7,7 +7,7 @@ function fieldsToPrismaSelect(fields: string) {
   } else {
     selectPrisma = {};
     for (const field of fieldsArray) {
-      selectPrisma = { ...selectPrisma, [field]: true };
+      selectPrisma = { ...selectPrisma, [field.trim()]: true };
     }
     return selectPrisma;
   }

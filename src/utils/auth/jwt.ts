@@ -3,11 +3,16 @@ import crypto from 'node:crypto';
 import { User } from '@prisma/client';
 import * as dotenv from 'dotenv';
 
+dotenv.config();
+
+const ACCESS_TOKEN_TIME = Number(process.env.ACCESS_TOKEN_TIME);
+const REFRESH_TOKEN_TIME = Number(process.env.REFRESH_TOKEN_TIME);
+
 // Usually I keep the token between 5 minutes - 15 minutes
 function generateAccessToken(user: Partial<User>) {
   return jwt.sign({ id: user.id, role: user.role }, process.env.JWT_ACCESS_SECRET as Secret, {
     algorithm: 'HS256', // Explicitly specify algorithm
-    expiresIn: '1m',// Short - lived tokens
+    expiresIn: ACCESS_TOKEN_TIME, // Short - lived tokens
     jwtid: crypto.randomBytes(16).toString('hex'), // Unique token ID
   });
 }
@@ -16,7 +21,7 @@ function generateAccessToken(user: Partial<User>) {
 function generateRefreshToken(user: Partial<User>) {
   return jwt.sign({ user }, process.env.JWT_REFRESH_SECRET as Secret, {
     algorithm: 'HS256', // Explicitly specify algorithm
-    expiresIn: '7d',// Short - lived tokens
+    expiresIn: REFRESH_TOKEN_TIME,
     jwtid: crypto.randomBytes(16).toString('hex'), // Unique token ID
   });
 }

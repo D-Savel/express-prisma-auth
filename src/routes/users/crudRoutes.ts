@@ -7,13 +7,15 @@ import validate from "../../middlewares/validation/validationMiddleware.js";
 import approvedBodyFields from "../../middlewares/validation/approvedBodyMiddleware.js";
 import { getUserByValidator } from "../../validation/crud/users/getUserByValidator.js";
 import { updateUserValidator } from "../../validation/crud/users/updateUserByIdValidator.js";
-import path from 'path';
+import path, { resolve } from 'path';
 import { Entity } from '../../types/Entity.js';
 import { fileURLToPath } from 'url';
 import { byIdValidator } from "../../validation/common/byIdValidator.js";
 import { getUserByIdValidator } from "../../validation/crud/users/getUserByIdValidator.js";
 import isAuth from "../../middlewares/auth/isAuth.js";
-import authorize from "../../middlewares/auth/authorize.js";
+import authorizeRole from "../../middlewares/auth/authorizeRole.js";
+import authorize from "../../middlewares/auth/authorizeUser.js";
+import authorizeUser from "../../middlewares/auth/authorizeUser.js";
 
 
 
@@ -31,30 +33,33 @@ const router = express.Router();
 //   crudForEntity);
 
 router.delete(`/${primaryEntity}/:id`,
+  isAuth,
+  authorizeRole(["ADMIN_ROLE", "FREE_USER"]),
   validate(byIdValidator as ValidationChain[]),
   noRecordForId(primaryEntity),
-  isAuth,
-  authorize,
   crudForEntity);
 
 router.get(`/${primaryEntity}/:id`,
-  validate(getUserByIdValidator as ValidationChain[]),
   isAuth,
-  authorize,
+  authorizeRole(["ADMIN_ROLE", "FREE_USER"]),
+  authorizeUser,
+  validate(getUserByIdValidator as ValidationChain[]),
   crudForEntity);
 
 router.get(`/${primaryEntity}/`,
-  validate(getUserByValidator as ValidationChain[]),
   isAuth,
-  authorize,
+  authorizeRole(["ADMIN_ROLE", "FREE_USER"]),
+  authorizeUser,
+  validate(getUserByValidator as ValidationChain[]),
   crudForEntity);
 
 router.patch(`/${primaryEntity}/:id`,
+  isAuth,
+  authorizeRole(["ADMIN_ROLE", "FREE_USER"]),
+  authorizeUser,
   approvedBodyFields(['username', 'email', 'password']),
   validate(updateUserValidator as ValidationChain[]),
   noRecordForId(primaryEntity), recordExists(primaryEntity),
-  isAuth,
-  authorize,
   crudForEntity);
 
 /* get Records with Foreign Key*/
@@ -62,11 +67,12 @@ router.patch(`/${primaryEntity}/:id`,
 const secondaryEntity = 'secondaryEntity';
 
 router.get(`/${secondaryEntity}/:id/${primaryEntity}`,
+  isAuth,
+  authorizeRole(["ADMIN_ROLE", "FREE_USER"]),
+  authorizeUser,
   noRecordForId(primaryEntity),
   /*TODO : Create specific validator 'getENTITYValidator.ts' to import for action get records (With or without query string request) for an primaryEntity*/
   // validate(getENTITYValidator as ValidationChain[]),
-  isAuth,
-  authorize,
   crudForEntity);
 
 

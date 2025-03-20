@@ -4,9 +4,11 @@ import { generateTokens } from '../../utils/auth/jwt';
 import { addRefreshTokenToWhitelist } from '../../services/auth/refreshToken.services';
 import { findUserByEmail } from '../../services/user/user.services';
 import { AuthError401 } from '../../errors/authError401';
+import dotenv from 'dotenv';
 
 export async function login(req: Request, res: Response, next: NextFunction) {
 
+  dotenv.config();
   const { email, password } = req.body.payload;
 
   try {
@@ -30,13 +32,13 @@ export async function login(req: Request, res: Response, next: NextFunction) {
     await addRefreshTokenToWhitelist({ refreshToken, userId: user!.id });
     res
       .cookie('accessToken', accessToken, {
-        maxAge: 24 * 60 * 1000,
+        maxAge: 30 * 60 * 1000,// 30 mn
         sameSite: 'none',
         secure: true
       })
       .cookie('refreshToken', refreshToken, {
         httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000,
+        maxAge: 25 * 60 * 60 * 1000, // 25 h
         sameSite: 'none',
         secure: true
       })

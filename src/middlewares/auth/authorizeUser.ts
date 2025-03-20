@@ -4,8 +4,8 @@ import { User } from '@prisma/client';
 import { AuthError403 } from '../../errors/authError403';
 
 declare module 'express' {
-  export interface Request {
-    user?: Partial<User>;
+  export interface Response {
+    locals: { user?: Partial<User>; };
   }
 }
 
@@ -28,7 +28,7 @@ function authorize(req: Request, res: Response, next: NextFunction) {
       userId = req.params.id as string;
     }
 
-    if (req.user?.id === userId || req.user?.role === 'ADMIN_ROLE') {
+    if (res.locals.user?.id === userId || res.locals.user?.role === 'ADMIN_ROLE') {
       next();
     } else {
       throw new AuthError403('Forbidden: User not authorized to perform this action');
