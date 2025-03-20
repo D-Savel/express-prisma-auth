@@ -85,21 +85,23 @@ Below is an example of how you can install and set up your express app.
 
   /.env 
   
-    `PORT=yourServerPort(number)`
-    `DATABASE_URL="postgresql://postgres:postgres@localhost:5432/my-db-project?schema=public"`
-    `JWT_ACCESS_SECRET="your-jwt-access-token-secret"`
-    `JWT_REFRESH_SECRET="your-jwt-refresh-token-secret"`
-    `// time in s`
-    `REFRESH_TOKEN_TIME=86400`
-    `// time in s`
-    `ACCESS_TOKEN_TIME=300`
+    ```
+    PORT=yourServerPort(number)
+    DATABASE_URL="postgresql://postgres:postgres@localhost:5432/my-db-project?schema=public"
+    JWT_ACCESS_SECRET="your-jwt-access-token-secret"
+    JWT_REFRESH_SECRET="your-jwt-refresh-token-secret"
+    // time in s
+    REFRESH_TOKEN_TIME=86400
+    // time in s
+    ACCESS_TOKEN_TIME=300
+    ```
 
 ### 5. Define node version
 
   You need to install node js 20  
 
-     and nvm (optional) on your OS.  
-    - For Windows https://github.com/coreybutler/nvm-windows/releases.
+    and nvm (optional) on your OS.  
+    - For Windows `https://github.com/coreybutler/nvm-windows/releases`
     - For Linux ubuntu run on terminal :  
     `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh`
   
@@ -128,18 +130,18 @@ Below is an example of how you can install and set up your express app.
 
   Add this code at the end of file
   
-`
+```
   _nvmrc_hook() {
   if [[ $PWD == $PREV_PWD ]]; then
     return
   fi
   PREV_PWD=$PWD
   [[ -f ".nvmrc" ]] && nvm use
-}
-if ! [[ "${PROMPT_COMMAND:-}" =~ _nvmrc_hook ]]; then
+  }
+  if ! [[ "${PROMPT_COMMAND:-}" =~ _nvmrc_hook ]]; then
   PROMPT_COMMAND="_nvmrc_hook${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
-fi
-`
+  fi
+```
 ### 7. Run docker postgres DB container (you need to install docker on your OS)
 - On your terminal run  
 
