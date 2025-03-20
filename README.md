@@ -131,11 +131,9 @@ Below is an example of how you can install and set up your express app.
 
   Add this code at the end of file
   
-```
+```bash
   _nvmrc_hook() {
-  if [[ $PWD == $PREV_PWD ]]; then
-    return
-  fi
+  if [[ $PWD == $PREV_PWD ]]; then return fi
   PREV_PWD=$PWD
   [[ -f ".nvmrc" ]] && nvm use
   }
