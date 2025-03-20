@@ -85,7 +85,7 @@ Below is an example of how you can install and set up your express app.
 
   /.env 
   
-    ```
+```
     PORT=yourServerPort(number)
     DATABASE_URL="postgresql://postgres:postgres@localhost:5432/my-db-project?schema=public"
     JWT_ACCESS_SECRET="your-jwt-access-token-secret"
@@ -94,7 +94,7 @@ Below is an example of how you can install and set up your express app.
     REFRESH_TOKEN_TIME=86400
     // time in s
     ACCESS_TOKEN_TIME=300
-    ```
+```
 
 ### 5. Define node version
 
